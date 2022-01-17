@@ -3,9 +3,18 @@ const express = require("express");
 const { createServer } = require("http");
 const { Server } = require("socket.io");
 
+const { io } = require("socket.io-client");
+const socket = io("http://localhost:3000");
+
 const app = express();
 const httpServer = createServer(app);
-const io = new Server(httpServer, { /* options */ });
+
+
+const SerialPort = require('serialport'); 
+const Readline = SerialPort.parsers.Readline;
+const port = new SerialPort('COM3', 9600);
+const parser = port.pipe(new Readline({delimiter: '\r\n'}));
+// const io = new Server(httpServer, { /* options */ });
 
 // const websocket = require('ws')
 // const wss = new websocket.Server({server: server})
@@ -26,65 +35,51 @@ var getTask = (task) => {
     return curTask
 }
 
-io.on('connection', (socket)=>{
-    
-    socket.on('refreshTask', (data) => {
-        console.log(data)
-    })
-    database.table('task').filter({status : {$ne: 2} ,date : { $lt: Date.now() }}).limit(1).getAll().then(data => {
-        if(data.length>0){
-            console.log('Start Task')
-            io.emit('initial', data[0])       
-        }else{
 
-            setTimeout(()=>{
-                console.log("Empty Task")
-                io.emit('TaskEmpty', {data:0})       
-            }, 5000)
-        }
-    }).catch(err => console.log(err))
+socket.on("connect", () => {
+    console.log(socket.id); // x8WIv7-mJelg7on_ALbx
+    setTimeout(()=>[
+        socket.emit("TaskStart", {id: 0, status: true})
+    ], 5000)
+});
+  
+socket.on("disconnect", () => {
+    console.log(socket.id); // undefined
+});
 
-    socket.on("TaskStart", (data) => {
-        database.table('task').filter({status : {$ne: 2} ,date : { $lt: Date.now() }}).limit(1).getAll().then(data => {
-            if(data.length>0){
-                console.log('Next Task')
-                io.emit('initial', data[0])       
-            }else{
-                console.log("Empty Task")
-                io.emit('TaskEmpty', {data:0})       
-            }
-        }).catch(err => console.log(err))
-    })
-
-    socket.on("TaskProc", (data) => {
-        console.log('Task Processed : ' + data['task_id'])
-        database.table('task').filter({task_id: data['task_id']}).update({
-            status : 1
-        }).then(resUpdate => {
-            // console.log(resUpdate)
-        }).catch(err => {console.log(err)})
-    })
-
-    socket.on("TaskDone", (data) => {
-        console.log('Task Done ID :' + data['task_id'])
-        if(data['status']){
-            nStatus = 2
-        }else{
-            nStatus = 3
-        }
-
-        database.table('task').filter({task_id: data['task_id']}).update({
-            status : nStatus
-        }).then(resUpdate => {
-            // console.log(resUpdate)
-            if(nStatus == 2){
-                g = true;
-            }else g = false
-            io.emit('TaskComplete', {status:g})      
-        }).catch(err => {console.log(err)})
-    })
+socket.on("TaskEmpty", (data)=> {
+    setTimeout(()=>[
+        socket.emit("TaskStart", {id: 0, status: true})
+    ], 5000)
 })
 
+socket.on("initial", (data) =>{
+    console.log(data)
+    // prosesTask(data)
+    socket.emit("TaskProc", {task_id: data["task_id"], status: true})
+    setTimeout(()=>{    
+        socket.emit("TaskDone", {task: data,task_id: data["task_id"], status: true})
+    }, 10000)
+})
+
+socket.on("TaskComplete", (data) => {
+    if(!data){
+        console.log("Retrying Failed Task")
+    }
+    setTimeout(()=>{
+        socket.emit("TaskStart", {id: data["task_id"], status: true})
+    }, 5000)
+})
+
+
+parser.on('data', (data) => {
+    console.log(data);
+    // const responseArray = JSON.parse(data);  // Incoming Data from arduino
+    // console.log("got response from port COM3\n " + responseArray)
+    // posisiX = responseArray['x'];
+    // posisiY = responseArray['y'];
+    // posisiZ = responseArray['z'];
+  });
 
 // wss.on('connection', function connection(ws) {
 //     console.log("new lient connected")
