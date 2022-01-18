@@ -31,6 +31,7 @@ var currentCMD
 // 2 = 1 + Siram
 // 3 = 1 + Ambil gambar
 // 4 = 1 + Ambil NPK
+// 5 = set Speed + Accel
 
 var getTask = (task) => {
     var curTask
@@ -43,7 +44,6 @@ var getTask = (task) => {
     return curTask
 }
 
-
 socket.on("connect", () => {
     console.log(socket.id); // x8WIv7-mJelg7on_ALbx
     setTimeout(() => [
@@ -54,6 +54,17 @@ socket.on("connect", () => {
 socket.on("disconnect", () => {
     console.log(socket.id); // undefined
 });
+
+socket.on("setting", (data) => {
+    currentCMD = 5;
+    startCommand()
+    port.write("m\n");
+    port.write(data.max + "\n");
+    port.write("a\n");
+    port.write(data.accel + "\n");
+    endCommand()
+    port.flush((err,results) => {})
+})
 
 socket.on("TaskEmpty", (data) => {
     setTimeout(() => [
@@ -101,7 +112,6 @@ socket.on("TaskComplete", (data) => {
         socket.emit("TaskStart", { id: data["task_id"], status: true })
     }, 5000)
 })
-
 
 
 parser.on('data', (res) => {
