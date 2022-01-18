@@ -105,7 +105,7 @@ socket.on("TaskComplete", (data) => {
 
 
 parser.on('data', (res) => {
-    console.log("Response");
+    // console.log("Response");
     console.log(res + "(" + typeof res + ")");
     port.flush((err,results) => {
         if (res.match("{")) {
