@@ -4,7 +4,7 @@ const { createServer } = require("http");
 const { Server } = require("socket.io");
 
 const { io } = require("socket.io-client");
-const socket = io("http://localhost:3000");
+const socket = io("http://192.168.43.90:3000");
 
 const app = express();
 const httpServer = createServer(app);
@@ -12,7 +12,7 @@ const httpServer = createServer(app);
 
 const SerialPort = require('serialport'); 
 const Readline = SerialPort.parsers.Readline;
-const port = new SerialPort('COM3', 9600);
+const port = new SerialPort('/dev/ttyACM0', 9600);
 const parser = port.pipe(new Readline({delimiter: '\r\n'}));
 // const io = new Server(httpServer, { /* options */ });
 
