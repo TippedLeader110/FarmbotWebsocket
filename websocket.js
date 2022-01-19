@@ -24,14 +24,16 @@ const parser = port.pipe(new Readline({ delimiter: '\r\n' }));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
-const { database } = require('./mysqlConf')
+const { database } = require('./mysqlConf');
+const { exec } = require("child_process");
 var currentTask
 var currentCMD
 // 1 = Gerak stepper 
 // 2 = 1 + Siram
 // 3 = 1 + Ambil gambar
 // 4 = 1 + Ambil NPK
-// 5 = set Speed + Accel
+// 5 = 1 + Siram NPK
+// 6 = set Speed + Accel
 
 var getTask = (task) => {
     var curTask
@@ -57,7 +59,7 @@ socket.on("disconnect", () => {
 
 socket.on("setting", (data) => {
     currentCMD = 5;
-    startCommand()
+    startCommand(currentCMD)
     port.write("m\n");
     port.write(data.max + "\n");
     port.write("a\n");
@@ -78,6 +80,7 @@ socket.on("initial", (data) => {
     currentTask = data
     socket.emit("TaskProc", { task_id: data["task_id"], status: true })
     currentCMD = data.cmd
+    console.log("Type Command : " + data.cmd)
     getLocation(data.target)
     // setTimeout(() => {
     //     socket.emit("TaskDone", { task: data, task_id: data["task_id"], status: true })
@@ -87,21 +90,34 @@ socket.on("initial", (data) => {
 socket.on("locationPush", (data) => {
     console.log("Location")
     console.log(data)
-    console.log("Start Command")
-    startCommand()
+    // console.log("Start Command")
+    // startCommand()
+    var stringCMD = ""
     if (currentCMD == 1) {
-        data.forEach(pos => {
-            moveCommand(pos)
-        })
+        // data.forEach(pos => {
+        //     command = command + moveCommand(pos)
+        // })
+        for(let i = 0; i < data.length; i++){
+            stringCMD = stringCMD + moveCommand(data[i])
+            // console.log(typeof stringCMD)
+        }
     } else if (currentCMD == 2) {
 
     } else if (currentCMD == 3) {
 
-    } else {
-
+    } else if(currentCMD == 4){
+        for(let i = 0; i < data.length; i++){
+            stringCMD = stringCMD + getnpkCommand(data[i])
+            // console.log(typeof stringCMD)
+        }
     }
-    console.log("End Command")
-    endCommand()
+    // console.log("End Command")
+    // console.log(stringCMD)
+    // command = 
+    executeCommand(writeCommand(startCommand(currentCMD),stringCMD , endCommand()))
+    // console.log("Command \n" + command);
+    // endCommand()
+
 })
 
 socket.on("TaskComplete", (data) => {
@@ -132,27 +148,56 @@ parser.on('data', (res) => {
 });
 
 var getLocation = (location) => {
+    location = location.split(",")
+    console.log("Target : " + location)
     socket.emit("getLocation", { location: location })
 }
 
-var startCommand = () => {
-    port.write("c\n");
-    port.write(currentCMD + "\n");
+var startCommand = (id) => {
+    // console.log("WDADAWDWA" + id)
+    let cmd = "c\n" + id + "\n"
+    // port.write("c\n");
+    // port.write(currentCMD + "\n");
+    return cmd;
 }
 
-var moveCommand = async (data) => {
-    // await port.flush(function(err,results){});
-    console.log("MOVE : " + data.x + ", " + data.y + " (x,y)")
-    port.write("x\n");
-    port.write(data.x + "\n");
-    port.write("y\n");
-    port.write(data.y + "\n");
+var writeCommand = (st, cmd, end) =>{
+    return st + cmd + end
+}
+
+var executeCommand = (cmd) => {
+    console.log("Executing : " + cmd.replace(/\n/g, ":"))
+    port.write(cmd);
 }
 
 var endCommand = () => {
-    port.write("e\n");
-    port.write("0" + "\n");
+    // port.write("e\n");
+    // port.write("0" + "\n");
+    return "e\n0\n"; 
+
 }
+
+var moveCommand = (data) => {
+    let cmd = "x\n" + data.x + "\ny\n" + data.y + "\n";
+    // console.log("cmd" + cmd);
+    // await port.flush(function(err,results){});
+    // console.log("MOVE : " + data.x + ", " + data.y + " (x,y)")
+    // port.write("x\n");
+    // port.write(data.x + "\n");
+    // port.write("y\n");
+    // port.write(data.y + "\n");
+    return cmd
+}
+
+var siramCommand = (data) => {
+
+}
+
+var getnpkCommand = (data) => {
+    let cmd = "x\n" + data.x + "\ny\n" + data.y + "\nz\n" + 5 + "\nd\n5000\nz\n0\n";
+    return cmd
+}
+
 
 
 httpServer.listen(3100, () => {
