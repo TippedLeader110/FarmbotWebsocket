@@ -49,7 +49,7 @@ var getTask = (task) => {
 socket.on("connect", () => {
     console.log(socket.id); // x8WIv7-mJelg7on_ALbx
     setTimeout(() => [
-        socket.emit("TaskStart", { id: 0, status: true })
+        socket.emit("TaskStart", { id: 0, status: true, id:socket.id })
     ], 5000)
 });
 
@@ -70,7 +70,7 @@ socket.on("setting", (data) => {
 
 socket.on("TaskEmpty", (data) => {
     setTimeout(() => [
-        socket.emit("TaskStart", { id: 0, status: true })
+        socket.emit("TaskStart", { id: 0, status: true, id:socket.id })
     ], 5000)
 })
 
@@ -78,12 +78,12 @@ socket.on("initial", (data) => {
     console.log(data)
     // prosesTask(data)
     currentTask = data
-    socket.emit("TaskProc", { task_id: data["task_id"], status: true })
+    socket.emit("TaskProc", { task_id: data["task_id"], status: true, id:socket.id })
     currentCMD = data.cmd
     console.log("Type Command : " + data.cmd)
     getLocation(data.target)
     // setTimeout(() => {
-    //     socket.emit("TaskDone", { task: data, task_id: data["task_id"], status: true })
+    //     socket.emit("TaskDone", { task: data, task_id: data["task_id"], status: true, id:socket.id })
     // }, 10000)
 })
 
@@ -125,7 +125,7 @@ socket.on("TaskComplete", (data) => {
         console.log("Retrying Failed Task")
     }
     setTimeout(() => {
-        socket.emit("TaskStart", { id: data["task_id"], status: true })
+        socket.emit("TaskStart", { id: data["task_id"], status: true, id:socket.id })
     }, 5000)
 })
 
@@ -139,7 +139,7 @@ parser.on('data', (res) => {
             console.log(data)
             if (data.status==1 && data.cmd == currentCMD) {
                 currentCMD = 0
-                socket.emit("TaskDone", { task: currentTask, task_id: currentTask["task_id"], status: true })
+                socket.emit("TaskDone", { task: currentTask, task_id: currentTask["task_id"], status: true, id:socket.id })
             } else {
                 console.log("Error : " + res.msg)
             }
@@ -150,7 +150,7 @@ parser.on('data', (res) => {
 var getLocation = (location) => {
     location = location.split(",")
     console.log("Target : " + location)
-    socket.emit("getLocation", { location: location })
+    socket.emit("getLocation", { location: location , id : socket.id})
 }
 
 var startCommand = (id) => {
