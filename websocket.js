@@ -218,6 +218,7 @@ var executeCommandType = (id) => {
 
 var executeCommand = (cmd) => {
     console.log("Executing : " + cmd[taskNomorAntrian].replace(/\n/g, ":"))    
+    console.log("Exc :" + cmd[taskNomorAntrian]);
     port.write(cmd[taskNomorAntrian])
     taskNomorAntrian++;
 }
