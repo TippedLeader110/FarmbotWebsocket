@@ -169,6 +169,8 @@ socket.on("TaskComplete", (data) => {
 parser.on('data', (res) => {
     // fserial=true;
     // console.log("Response");
+    if(res="DIR :5 STEP :2 STEPROTATION :200")
+    fserial=true;
     console.log(res + "(" + typeof res + ")");
     port.flush((err,results) => {
         if (res.match("{")) {
