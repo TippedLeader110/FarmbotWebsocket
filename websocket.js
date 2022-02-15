@@ -159,7 +159,6 @@ socket.on("TaskComplete", (data) => {
     if (!data) {
         console.log("Retrying Failed Task")
     }
-    console.log("Task Complete")
     setTimeout(() => {
         socket.emit("TaskStart", { id: data["task_id"], status: true, id:socket.id })
     }, 5000)
