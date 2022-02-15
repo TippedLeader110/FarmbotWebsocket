@@ -12,8 +12,8 @@ const httpServer = createServer(app);
 
 const SerialPort = require('serialport');
 const Readline = SerialPort.parsers.Readline;
-const port = new SerialPort('/dev/ttyACM0', 9600);
-// const port = new SerialPort('COM3', 9600);
+// const port = new SerialPort('/dev/ttyACM0', 9600);
+const port = new SerialPort('COM3', 9600);
 const parser = port.pipe(new Readline({ delimiter: '\r\n' }));
 
 // const io = new Server(httpServer, { /* options */ });
@@ -46,10 +46,30 @@ var getTask = (task) => {
     return curTask
 }
 
+var fserial =false;
+var tryN = 0;
+
+var checkConnect = () =>{
+    tryN++;
+    if(fserial){
+        socket.emit("TaskStart", { id: 0, status: true, id:socket.id })
+    }else{
+        console.log("Mencoba kembali.....(" + tryN + ")")
+        if(tryN==10){
+            throw new Error("Tidak dapat terhubung dengan Arduino Mego 2560");
+        }else{
+            setTimeout(() => [
+                checkConnect()
+            ], 5000)    
+        }
+    }
+}
+
 socket.on("connect", () => {
     console.log(socket.id); // x8WIv7-mJelg7on_ALbx
+    console.log("Mencoba menghubungkan ke Arduino.....")
     setTimeout(() => [
-        socket.emit("TaskStart", { id: 0, status: true, id:socket.id })
+        checkConnect()
     ], 5000)
 });
 
@@ -132,7 +152,12 @@ socket.on("TaskComplete", (data) => {
 
 parser.on('data', (res) => {
     // console.log("Response");
-    console.log(res + "(" + typeof res + ")");
+    if(res=="start"){
+        fserial = true;
+    }else{
+        console.log(res + "(" + typeof res + ")");
+    }
+        
     port.flush((err,results) => {
         if (res.match("{")) {
             data = JSON.parse(res)
