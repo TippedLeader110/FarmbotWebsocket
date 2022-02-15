@@ -131,7 +131,7 @@ socket.on("locationPush", (data) => {
         //     command = command + moveCommand(pos)
         // })
         for(let i = 0; i < data.length; i++){
-            taskQueue.append(moveCommand(data[i]))
+            taskQueue.push(moveCommand(data[i]))
             // console.log(typeof stringCMD)
         }
     } else if (currentCMD == 2) {
@@ -140,7 +140,7 @@ socket.on("locationPush", (data) => {
 
     } else if(currentCMD == 4){
         for(let i = 0; i < data.length; i++){
-            taskQueue.append(getnpkCommand(data[i]))
+            taskQueue.push(getnpkCommand(data[i]))
             // console.log(typeof stringCMD)
         }
     }
@@ -167,7 +167,7 @@ socket.on("TaskComplete", (data) => {
 
 
 parser.on('data', (res) => {
-    // fserial=true;
+    // fserial=true;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
     // console.log("Response");
     if(res="DIR :5 STEP :2 STEPROTATION :200")
     fserial=true;
