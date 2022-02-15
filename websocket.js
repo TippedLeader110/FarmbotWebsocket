@@ -20,20 +20,23 @@ const parser = port.pipe(new Readline({ delimiter: '\r\n' }));
 
 // const websocket = require('ws')
 // const wss = new websocket.Server({server: server})
-
+var fserial = false;
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
 const { database } = require('./mysqlConf');
 const { exec } = require("child_process");
 var currentTask
-var currentCMD
+var currentCMDrasp
 // 1 = Gerak stepper 
 // 2 = 1 + Siram
 // 3 = 1 + Ambil gambar
 // 4 = 1 + Ambil NPK
 // 5 = 1 + Siram NPK
 // 6 = set Speed + Accel
+
+var taskQueue = []
+var taskNomorAntrian = 0
 
 var getTask = (task) => {
     var curTask
@@ -46,11 +49,35 @@ var getTask = (task) => {
     return curTask
 }
 
+var onConnect = () => {
+    if(fserial){
+        socket.emit("TaskStart", { id: 0, status: true, id:socket.id })
+    }else{
+        if(trySerial==1) {
+            console.log("["+ trySerial +"]Mencoba menghubungkan ke Arduino MEGA 2560 via Serial....");
+            trySerial=2;
+        }else if(trySerial==10){
+            throw new Error("Tidak dapat terhubung dengan Arduino Mego 2560");
+        }else{
+            console.log("["+ trySerial +"]Mencoba ulang dalam 5 detik..");
+        }
+        setTimeout(() => {
+            onConnect()
+            // socket.emit("TaskStart", { id: data["task_id"], status: true, id:socket.id })
+            trySerial++;
+        }, 5000)
+    }
+}
+
 socket.on("connect", () => {
     console.log(socket.id); // x8WIv7-mJelg7on_ALbx
+    console.log("Serial : " + fserial);
+
     setTimeout(() => [
-        socket.emit("TaskStart", { id: 0, status: true, id:socket.id })
+        onConnect()
+        // socket.emit("TaskStart", { id: 0, status: true, id:socket.id })
     ], 5000)
+    
 });
 
 socket.on("disconnect", () => {
@@ -74,14 +101,19 @@ socket.on("TaskEmpty", (data) => {
     ], 5000)
 })
 
+var trySerial = 1;
+
 socket.on("initial", (data) => {
     console.log(data)
     // prosesTask(data)
     currentTask = data
-    socket.emit("TaskProc", { task_id: data["task_id"], status: true, id:socket.id })
-    currentCMD = data.cmd
-    console.log("Type Command : " + data.cmd)
-    getLocation(data.target)
+    if(fserial){
+        socket.emit("TaskProc", { task_id: data["task_id"], status: true, id:socket.id })
+        currentCMD = data.cmd
+        console.log("Type Command : " + data.cmd)
+        getLocation(data.target)
+    
+    }
     // setTimeout(() => {
     //     socket.emit("TaskDone", { task: data, task_id: data["task_id"], status: true, id:socket.id })
     // }, 10000)
@@ -92,13 +124,14 @@ socket.on("locationPush", (data) => {
     console.log(data)
     // console.log("Start Command")
     // startCommand()
-    var stringCMD = ""
+    // var stringCMD = ""
+    taskQueue = []
     if (currentCMD == 1) {
         // data.forEach(pos => {
         //     command = command + moveCommand(pos)
         // })
         for(let i = 0; i < data.length; i++){
-            stringCMD = stringCMD + moveCommand(data[i])
+            taskQueue.append(moveCommand(data[i]))
             // console.log(typeof stringCMD)
         }
     } else if (currentCMD == 2) {
@@ -107,14 +140,16 @@ socket.on("locationPush", (data) => {
 
     } else if(currentCMD == 4){
         for(let i = 0; i < data.length; i++){
-            stringCMD = stringCMD + getnpkCommand(data[i])
+            taskQueue.append(getnpkCommand(data[i]))
             // console.log(typeof stringCMD)
         }
     }
     // console.log("End Command")
     // console.log(stringCMD)
     // command = 
-    executeCommand(writeCommand(startCommand(currentCMD),stringCMD , endCommand()))
+    taskNomorAntrian = 0;
+    executeCommandType(currentCMD)
+    executeCommand(taskQueue)
     // console.log("Command \n" + command);
     // endCommand()
 
@@ -132,6 +167,7 @@ socket.on("TaskComplete", (data) => {
 
 
 parser.on('data', (res) => {
+    // fserial=true;
     // console.log("Response");
     console.log(res + "(" + typeof res + ")");
     port.flush((err,results) => {
@@ -139,6 +175,12 @@ parser.on('data', (res) => {
             data = JSON.parse(res)
             console.log(data)
             if (data.status==1 && data.cmd == currentCMD) {
+                if(taskNomorAntrian<taskQueue.length){
+                    executeCommand(taskQueue)
+                }else{
+                    endCommand()
+                }
+            }else if(data.status==2 && data.cmd == currentCMD) {
                 currentCMD = 0
                 socket.emit("TaskDone", { task: currentTask, task_id: currentTask["task_id"], status: true, id:socket.id })
             } else {
@@ -166,16 +208,24 @@ var writeCommand = (st, cmd, end) =>{
     return st + cmd + end
 }
 
+var executeCommandType = (id) => {
+    let cmd = startCommand(id);
+    console.log("Start Command : " + cmd.replace(/\n/g, ":"))
+    port.write(cmd)
+}
+
 var executeCommand = (cmd) => {
-    console.log("Executing : " + cmd.replace(/\n/g, ":"))
-    port.write(cmd);
+    console.log("Executing : " + cmd[taskNomorAntrian].replace(/\n/g, ":"))    
+    port.write(cmd[taskNomorAntrian])
+    taskNomorAntrian++;
 }
 
 var endCommand = () => {
     // port.write("e\n");
     // port.write("0" + "\n");
-    return "e\n0\n"; 
-
+    let endCommand = "e\n0\n"; 
+    console.log("End Command : " + endCommand.replace(/\n/g, ":"))    
+    port.write(endCommand)
 }
 
 var moveCommand = (data) => {
@@ -195,7 +245,7 @@ var siramCommand = (data) => {
 }
 
 var getnpkCommand = (data) => {
-    let cmd = "x\n" + data.x + "\ny\n" + data.y + "\nz\n" + 5 + "\nd\n5000\nz\n0\n";
+    let cmd = "x\n" + data.x + "\ny\n" + data.y + "\nz\n" + 10 + "\nd\n5000\nz\n0\n";
     return cmd
 }
 
