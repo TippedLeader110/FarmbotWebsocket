@@ -4,11 +4,11 @@ const { createServer } = require("http");
 const { Server } = require("socket.io");
 
 const { io } = require("socket.io-client");
-const socket = io("http://192.168.71.134:3000");
-const router = express.Router();
+const socket = io("http://192.168.248.134:3000");
 
 const app = express();
 const httpServer = createServer(app);
+
 
 const SerialPort = require('serialport');
 const Readline = SerialPort.parsers.Readline;
@@ -37,54 +37,6 @@ var nomorAntrian = 0;
 // 5 = 1 + Siram NPK
 // 6 = set Speed + Accel
 
-function ambilGambarPython(){
-    return new Promise((resolve, reject) => {
-        const spawn = require('child_process').spawn;
-        var scriptExecution = spawn('python3', ["./cam.py", 'args']);
-        var file
-        scriptExecution.stdout.on('data', (data) => {
-            file = new TextDecoder("utf-8").decode(data);
-            // res.json({result: 'done'});
-            resolve(file)
-        });
-
-        scriptExecution.stdout.on('end', (data) => {
-            file = new TextDecoder("utf-8").decode(data);
-            // console.log('end' + file);
-            // console.log(string);
-            // resolve(string);
-            // console.log(uint8arrayToString(data));
-            // res.json({result: 'done'});
-        });
-        
-        // Handle error output
-        scriptExecution.stderr.on('data', (data) => {
-            var string = new TextDecoder("utf-8").decode(data);
-            console.log('error', string);
-            // As said before, convert the Uint8Array to a readable string.
-            // console.log(data);
-            // res.json({result: data});
-            reject({message: string});
-        });
-        
-        scriptExecution.on('exit', (code) => {
-            // console.log("Process quit with code : " + code);
-            // resolve(file)
-        });
-        scriptExecution.stdin.write('start');
-        scriptExecution.stdin.end();
-    })
-}
-
-
-app.get('/getGambar', (req, res) => {
-    ambilGambarPython().then(res => {
-        console.log("Nama file : " + res)
-    }).catch(err => {
-        console.error(err)
-    })
-})
-
 var getTask = (task) => {
     var curTask
     for (let i = 0; i < data.length; i++) {
@@ -110,7 +62,7 @@ var checkConnect = () => {
         // }
     } else {
         console.log("Mencoba kembali.....(" + tryN + ")")
-        if (tryN == 30) {
+        if (tryN == 10) {
             throw new Error("Tidak dapat terhubung dengan Arduino Mego 2560");
         } else {
             setTimeout(() => [
@@ -131,12 +83,6 @@ socket.on("connect", () => {
 socket.on("disconnect", () => {
     console.log(socket.id); // undefined
 });
-
-socket.on("taskCamera", (data) => {
-    ambilGambarPython().then(namafile => {
-        socket.emit("TaskDone", { task: data.cmd, task_id: data.task_id, status: true, id: socket.id })    
-    }).catch(err => console.error(err))
-})
 
 socket.on("setting", (data) => {
     currentCMD = 5;
@@ -167,7 +113,7 @@ socket.on("initial", (data) => {
     //     socket.emit("TaskDone", { task: data, task_id: data["task_id"], status: true, id:socket.id })
     // }, 10000)
 })
-var nomorAntrian = 0;
+
 socket.on("locationPush", (data) => {
     console.log("Location")
     console.log(data)
@@ -175,7 +121,7 @@ socket.on("locationPush", (data) => {
     // startCommand()
     // var stringCMD = ""
     daftarAntrian = [];
-
+    nomorAntrian = 0;
     daftarAntrian.push(moveCommand(data[0]));
     if (currentCMD == 1) {
         // data.forEach(pos => {
@@ -196,7 +142,7 @@ socket.on("locationPush", (data) => {
     // console.log(stringCMD)
     // command = 
     port.write(startCommand(currentCMD));
-    startTask(nomorAntrian);
+    startTask(0);
     // executeCommand(writeCommand(startCommand(currentCMD),stringCMD , endCommand()))
     // console.log("Command \n" + command);
     // endCommand()
@@ -205,11 +151,10 @@ socket.on("locationPush", (data) => {
 
 var startTask = (antrian) => {
     if (nomorAntrian < daftarAntrian.length) port.write(daftarAntrian[antrian]);
-
+    
 }
 
 socket.on("TaskComplete", (data) => {
-    console.log("TaskComplete Seq", data);
     if (!data) {
         console.log("Retrying Failed Task")
     }
@@ -220,8 +165,7 @@ socket.on("TaskComplete", (data) => {
 
 
 parser.on('data', (res) => {
-    console.log("Response", res);
-
+    // console.log("Response");
     if (res == "start") {
         fserial = true;
         console.log("Terhubung")
@@ -234,18 +178,15 @@ parser.on('data', (res) => {
             data = JSON.parse(res)
             console.log(data)
             if (data.status == 1 && data.cmd == currentCMD) {
-                if (nomorAntrian + 1 > daftarAntrian.length) {
+                if(nomorAntrian+1 > daftarAntrian.length){
                     nomorAntrian++;
                     startTask(nomorAntrian);
-                } else {
+                }else{
                     executeCommand(endCommand());
                 }
-            }else if(data.status == 2 && data.cmd == 3){
-                ambilGambarPython().then(namafile => {
-                    socket.emit("TaskDone", { task: currentTask, task_id: currentTask["task_id"], status: true, id: socket.id })    
-                }).catch(err => console.error(err))
-            }else if (data.status == 2) {
+            } else if (data.status == 2) {
                 // port.write("e\n0\n");
+                
                 socket.emit("TaskDone", { task: currentTask, task_id: currentTask["task_id"], status: true, id: socket.id })
             }
         }
