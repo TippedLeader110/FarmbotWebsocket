@@ -4,8 +4,7 @@ const { createServer } = require("http");
 const { Server } = require("socket.io");
 
 const { io } = require("socket.io-client");
-const socket = io("http://192.168.71.134:3000");
-const router = express.Router();
+const socket = io("http://192.168.18.134:3000");
 
 const app = express();
 const httpServer = createServer(app);
@@ -110,7 +109,7 @@ var checkConnect = () => {
         // }
     } else {
         console.log("Mencoba kembali.....(" + tryN + ")")
-        if (tryN == 30) {
+        if (tryN == 10) {
             throw new Error("Tidak dapat terhubung dengan Arduino Mego 2560");
         } else {
             setTimeout(() => [
@@ -175,7 +174,7 @@ socket.on("locationPush", (data) => {
     // startCommand()
     // var stringCMD = ""
     daftarAntrian = [];
-
+    nomorAntrian = 0;
     daftarAntrian.push(moveCommand(data[0]));
     if (currentCMD == 1) {
         // data.forEach(pos => {
@@ -196,7 +195,7 @@ socket.on("locationPush", (data) => {
     // console.log(stringCMD)
     // command = 
     port.write(startCommand(currentCMD));
-    startTask(nomorAntrian);
+    startTask(0);
     // executeCommand(writeCommand(startCommand(currentCMD),stringCMD , endCommand()))
     // console.log("Command \n" + command);
     // endCommand()
@@ -205,7 +204,7 @@ socket.on("locationPush", (data) => {
 
 var startTask = (antrian) => {
     if (nomorAntrian < daftarAntrian.length) port.write(daftarAntrian[antrian]);
-
+    
 }
 
 socket.on("TaskComplete", (data) => {
@@ -220,8 +219,7 @@ socket.on("TaskComplete", (data) => {
 
 
 parser.on('data', (res) => {
-    console.log("Response", res);
-
+    // console.log("Response");
     if (res == "start") {
         fserial = true;
         console.log("Terhubung")
