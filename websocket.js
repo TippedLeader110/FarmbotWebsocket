@@ -272,7 +272,10 @@ parser.on('data', (res) => {
                 }).catch(err => console.error(err))
             } else if (data.status == 2) {
                 // port.write("e\n0\n");
-                socket.emit("TaskDone", { task: currentTask, task_id: currentTask["task_id"], status: true, id: socket.id })
+                // socket.emit("TaskDone", { task: currentTask, task_id: currentTask["task_id"], status: true, id: socket.id })
+                ambilGambarPython().then(file=> {
+                    socket.emit("TaskDone", { task: currentTask, task_id: currentTask["task_id"], status: true, id: socket.id , foto : file})
+                }).catch(err => console.error(err))
             }
         }
     });
