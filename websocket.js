@@ -4,7 +4,7 @@ const { createServer } = require("http");
 const { Server } = require("socket.io");
 
 const { io } = require("socket.io-client");
-const socket = io("http://192.168.1.16:3000");
+const socket = io("http://103.163.139.230:3000");
 
 const app = express();
 const httpServer = createServer(app);
