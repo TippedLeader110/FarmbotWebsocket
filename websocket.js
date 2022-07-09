@@ -91,6 +91,18 @@ function ambilGambarPython() {
 }
 
 
+socket.on("cekrek", () => {
+    console.log(socket.id); // x8WIv7-mJelg7on_ALbx
+    console.log("Mengambil gambar");
+    ambilGambarPython().then(resz => {
+        console.log("Nama file : " + resz)
+        socket.emit("cekrek", resz);
+    }).catch(err => {
+        console.error(err)
+        socket.emit("error", err);
+    })
+});
+
 app.get('/getGambar', (req, res) => {
     ambilGambarPython().then(resz => {
         console.log("Nama file : " + resz)
@@ -149,7 +161,7 @@ socket.on("disconnect", () => {
 
 socket.on("taskCamera", (data) => {
     ambilGambarPython().then(namafile => {
-        socket.emit("TaskDone", { task: data.cmd, task_id: data.task_id, status: true, id: socket.id })    
+        socket.emit("TaskDone", { task: data.cmd, task_id: data.task_id, status: true, id: socket.id })
     }).catch(err => console.error(err))
 })
 
@@ -220,7 +232,7 @@ socket.on("locationPush", (data) => {
 
 var startTask = (antrian) => {
     if (nomorAntrian < daftarAntrian.length) port.write(daftarAntrian[antrian]);
-    
+
 }
 
 socket.on("TaskComplete", (data) => {
@@ -254,11 +266,11 @@ parser.on('data', (res) => {
                 } else {
                     executeCommand(endCommand());
                 }
-            }else if(data.status == 2 && data.cmd == 3){
+            } else if (data.status == 2 && data.cmd == 3) {
                 ambilGambarPython().then(namafile => {
-                    socket.emit("TaskDone", { task: currentTask, task_id: currentTask["task_id"], status: true, id: socket.id })    
+                    socket.emit("TaskDone", { task: currentTask, task_id: currentTask["task_id"], status: true, id: socket.id })
                 }).catch(err => console.error(err))
-            }else if (data.status == 2) {
+            } else if (data.status == 2) {
                 // port.write("e\n0\n");
                 socket.emit("TaskDone", { task: currentTask, task_id: currentTask["task_id"], status: true, id: socket.id })
             }
