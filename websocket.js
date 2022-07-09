@@ -4,7 +4,7 @@ const { createServer } = require("http");
 const { Server } = require("socket.io");
 
 const { io } = require("socket.io-client");
-const socket = io("http://103.163.139.230:3000");
+const socket = io("http://192.168.1.16:3000");
 
 const app = express();
 const httpServer = createServer(app);
@@ -35,27 +35,42 @@ var nomorAntrian = 0;
 // 4 = 1 + Ambil NPK
 // 5 = 1 + Siram NPK
 // 6 = set Speed + Accel
+var fs = require('fs');
 
-function ambilGambarPython(){
+function base64_encode(file) {
+    // read binary data
+    var bitmap = fs.readFileSync(file);
+    // convert binary data to base64 encoded string
+    return new Buffer(bitmap).toString('base64');
+}
+
+function ambilGambarPython() {
     return new Promise((resolve, reject) => {
         const spawn = require('child_process').spawn;
         var scriptExecution = spawn('python3', ["./cam.py", 'args']);
         var file
         scriptExecution.stdout.on('data', (data) => {
-            file = new TextDecoder("utf-8").decode(data);
-            // res.json({result: 'done'});
-            resolve(file)
+            // console.log(data)
+            var resp = new TextDecoder("utf-8").decode(data);
+            // console.log(resp[1])
+            var result = {}
+            resp = resp.replace('\n', '');
+            result['nama'] = resp
+            result['file'] = base64_encode('./camera/' + resp);
+            // resp = JSON.parse(resp);
+            resolve(result)
         });
 
         scriptExecution.stdout.on('end', (data) => {
-            file = new TextDecoder("utf-8").decode(data);
+            var resp = new TextDecoder("utf-8").decode(data);
+            // console.log()
             // console.log('end' + file);
             // console.log(string);
             // resolve(string);
             // console.log(uint8arrayToString(data));
             // res.json({result: 'done'});
         });
-        
+
         // Handle error output
         scriptExecution.stderr.on('data', (data) => {
             var string = new TextDecoder("utf-8").decode(data);
@@ -63,9 +78,9 @@ function ambilGambarPython(){
             // As said before, convert the Uint8Array to a readable string.
             // console.log(data);
             // res.json({result: data});
-            reject({message: string});
+            reject({ message: string });
         });
-        
+
         scriptExecution.on('exit', (code) => {
             // console.log("Process quit with code : " + code);
             // resolve(file)
@@ -77,8 +92,9 @@ function ambilGambarPython(){
 
 
 app.get('/getGambar', (req, res) => {
-    ambilGambarPython().then(res => {
-        console.log("Nama file : " + res)
+    ambilGambarPython().then(resz => {
+        console.log("Nama file : " + resz)
+        res.send(resz);
     }).catch(err => {
         console.error(err)
     })
@@ -231,7 +247,7 @@ parser.on('data', (res) => {
         if (res.match("{")) {
             data = JSON.parse(res)
             console.log(data)
-            if (data.status == 1 && data.cmd == currentCMD) {
+            if (data.status == 1) {
                 if (nomorAntrian + 1 > daftarAntrian.length) {
                     nomorAntrian++;
                     startTask(nomorAntrian);
@@ -251,7 +267,6 @@ parser.on('data', (res) => {
 });
 
 var getLocation = (location) => {
-    location = location.split(",")
     console.log("Target : " + location)
     socket.emit("getLocation", { location: location, id: socket.id })
 }
