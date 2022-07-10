@@ -296,7 +296,8 @@ parser.on('data', (res) => {
                 }
             } else if (data.status == 2) {
                 if (data.cmd == 6) {
-                    console.log("Ambil nilai npk \n Mengirim perintah mqtt");
+                    console.log("Ambil nilai npk \nMengirim perintah mqtt id => \n" );
+                    console.log(currentTask["task_id"]);
                     client.publish(topic_to_sub, currentTask["task_id"], { qos: 0, retain: false }, (error) => {
                         if (error) {
                             console.error(error)
