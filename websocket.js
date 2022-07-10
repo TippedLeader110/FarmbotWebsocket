@@ -51,6 +51,14 @@ client.on('message', (topic, payload) => {
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
+function delay(delayInms) {
+    return new Promise(resolve => {
+        setTimeout(() => {
+            resolve(2);
+        }, delayInms);
+    });
+}
+
 const { database } = require('./mysqlConf');
 const { exec } = require("child_process");
 var currentTask
@@ -223,7 +231,7 @@ socket.on("initial", (data) => {
     // }, 10000)
 })
 var nomorAntrian = 0;
-socket.on("locationPush", (data) => {
+socket.on("locationPush",async (data) => {
     console.log("Location")
     console.log(data)
     // console.log("Start Command")
@@ -253,13 +261,11 @@ socket.on("locationPush", (data) => {
     console.log('=====================')
     console.log(startCommand(currentCMD))
     console.log('=====================')
-    setTimeout(function () {
-        port.write(startCommand(currentCMD));
-    }, 6000).then(r => {
-        setTimeout(function () {
-            startTask(0);
-        }, 6000);
-    });
+    await delay(6000);
+    port.write(startCommand(currentCMD));
+    await delay(6000);
+    startTask(0);
+    
     // executeCommand(writeCommand(startCommand(currentCMD),stringCMD , endCommand()))
     // console.log("Command \n" + command);
     // endCommand()
@@ -294,7 +300,7 @@ parser.on('data', (res) => {
         console.log(res + "(" + typeof res + ")");
     }
 
-    port.flush((err, results) => {
+    port.flush(async(err, results) => {
         if (res.match("{")) {
             data = JSON.parse(res)
             console.log(data)
@@ -316,16 +322,18 @@ parser.on('data', (res) => {
                         }
                     });
                 }
-                ambilGambarPython().then(file => {
+                ambilGambarPython().then(async (file) => {
                     let t = "r\n" + 0 + "\n"
                     console.log('=====================')
                     console.log(t)
                     console.log('=====================')
-                    setTimeout(function () {
-                        port.write(t);
-                    }, 6000).then(r => {
-                        socket.emit("TaskDone", { task: currentTask, task_id: currentTask["task_id"], status: true, id: socket.id, foto: file })
-                    });
+                    await delay(6000);
+                    port.write(t);
+                    await delay(6000);
+                    // setTimeout(function () {
+                    // }, 6000).then(r => {
+                    // });
+                    socket.emit("TaskDone", { task: currentTask, task_id: currentTask["task_id"], status: true, id: socket.id, foto: file })
                 }).catch(err => console.error(err))
             }
         }
