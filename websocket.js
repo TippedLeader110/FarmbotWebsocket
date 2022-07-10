@@ -316,7 +316,6 @@ parser.on('data', (res) => {
                     });
                 }
                 ambilGambarPython().then(file => {
-                    socket.emit("TaskDone", { task: currentTask, task_id: currentTask["task_id"], status: true, id: socket.id, foto: file })
                     let t = "r\n" + 0 + "\n"
                     console.log('=====================')
                     console.log(t)
@@ -324,6 +323,7 @@ parser.on('data', (res) => {
                     setTimeout(function () {
                         port.write(t);
                     }, 6000);
+                    socket.emit("TaskDone", { task: currentTask, task_id: currentTask["task_id"], status: true, id: socket.id, foto: file })
                 }).catch(err => console.error(err))
             }
         }
