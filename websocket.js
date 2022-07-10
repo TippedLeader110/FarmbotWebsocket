@@ -16,7 +16,34 @@ const port = new SerialPort('/dev/ttyACM0', 9600);
 const parser = port.pipe(new Readline({ delimiter: '\r\n' }));
 
 // const io = new Server(httpServer, { /* options */ });
+const hostmqtt = "103.163.139.230";
+const portmqtt = "1883";
+const clientId = "mqtt_websocket_farmbot-agribot";
+const mqtt_username = "farmbot-mqtt";
+const mqtt_password = "farmbot0123";
+const topic_to_sub = "farmbot/sendnpk";
+const connectUrl = "mqtt://" + hostmqtt + ":" + portmqtt;
 
+
+const client = mqtt.connect(connectUrl, {
+    clientId,
+    clean: true,
+    connectTimeout: 4000,
+    username: mqtt_username,
+    password: mqtt_password,
+    reconnectPeriod: 1000,
+})
+
+client.on('connect', () => {
+    console.log('MQTT Conected');
+    client.subscribe([topic_to_sub], () => {
+        console.log("subscribe ke topic => " + topic_to_sub)
+    })
+})
+
+client.on('message', (topic, payload) => {
+    console.log('Pesan MQTT => ', topic, payload.toString())
+})
 // const websocket = require('ws')
 // const wss = new websocket.Server({server: server})
 
@@ -266,15 +293,19 @@ parser.on('data', (res) => {
                 } else {
                     executeCommand(endCommand());
                 }
-            } else if (data.status == 2 && data.cmd == 3) {
-                ambilGambarPython().then(namafile => {
-                    socket.emit("TaskDone", { task: currentTask, task_id: currentTask["task_id"], status: true, id: socket.id })
-                }).catch(err => console.error(err))
             } else if (data.status == 2) {
-                // port.write("e\n0\n");
-                // socket.emit("TaskDone", { task: currentTask, task_id: currentTask["task_id"], status: true, id: socket.id })
-                ambilGambarPython().then(file=> {
-                    socket.emit("TaskDone", { task: currentTask, task_id: currentTask["task_id"], status: true, id: socket.id , foto : file})
+                if (data.cmd == 6) {
+                    console.log("Ambil nilai npk \n Mengirim perintah mqtt");
+                    client.publish(topic_to_sub, currentTask["task_id"], { qos: 0, retain: false }, (error) => {
+                        if (error) {
+                            console.error(error)
+                        }
+                    });
+                }
+                ambilGambarPython().then(file => {
+                    socket.emit("TaskDone", { task: currentTask, task_id: currentTask["task_id"], status: true, id: socket.id, foto: file })
+                    let t = "r\n" + 0 + "\n"
+                    port.write(t);
                 }).catch(err => console.error(err))
             }
         }
