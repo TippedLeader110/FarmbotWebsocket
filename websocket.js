@@ -250,6 +250,9 @@ socket.on("locationPush", (data) => {
     // console.log("End Command")
     // console.log(stringCMD)
     // command = 
+    console.log('=====================')
+    console.log(startCommand(currentCMD))
+    console.log('=====================')
     port.write(startCommand(currentCMD));
     startTask(0);
     // executeCommand(writeCommand(startCommand(currentCMD),stringCMD , endCommand()))
@@ -259,6 +262,9 @@ socket.on("locationPush", (data) => {
 })
 
 var startTask = (antrian) => {
+    console.log('=====================')
+    console.log(daftarAntrian[antrian])
+    console.log('=====================')
     if (nomorAntrian < daftarAntrian.length) port.write(daftarAntrian[antrian]);
 
 }
@@ -296,7 +302,7 @@ parser.on('data', (res) => {
                 }
             } else if (data.status == 2) {
                 if (data.cmd == 6) {
-                    console.log("Ambil nilai npk \nMengirim perintah mqtt id => \n" );
+                    console.log("Ambil nilai npk \nMengirim perintah mqtt id => \n");
                     console.log(currentTask["task_id"]);
                     console.log("Topik => " + topic_to_sub);
                     client.publish(topic_to_sub, currentTask["task_id"].toString(), { qos: 0, retain: false }, (error) => {
@@ -308,6 +314,9 @@ parser.on('data', (res) => {
                 ambilGambarPython().then(file => {
                     socket.emit("TaskDone", { task: currentTask, task_id: currentTask["task_id"], status: true, id: socket.id, foto: file })
                     let t = "r\n" + 0 + "\n"
+                    console.log('=====================')
+                    console.log(t)
+                    console.log('=====================')
                     port.write(t);
                 }).catch(err => console.error(err))
             }
@@ -334,6 +343,9 @@ var writeCommand = (st, cmd, end) => {
 
 var executeCommand = (cmd) => {
     console.log("Executing : " + cmd.replace(/\n/g, ":"))
+    console.log('=====================')
+    console.log(cmd)
+    console.log('=====================')
     port.write(cmd);
 }
 
