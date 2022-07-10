@@ -253,8 +253,12 @@ socket.on("locationPush", (data) => {
     console.log('=====================')
     console.log(startCommand(currentCMD))
     console.log('=====================')
-    port.write(startCommand(currentCMD));
-    startTask(0);
+    setTimeout(function () {
+        port.write(startCommand(currentCMD));
+    }, 6000);
+    setTimeout(function () {
+        startTask(0);
+    }, 6000);
     // executeCommand(writeCommand(startCommand(currentCMD),stringCMD , endCommand()))
     // console.log("Command \n" + command);
     // endCommand()
@@ -317,7 +321,9 @@ parser.on('data', (res) => {
                     console.log('=====================')
                     console.log(t)
                     console.log('=====================')
-                    port.write(t);
+                    setTimeout(function () {
+                        port.write(t);
+                    }, 6000);
                 }).catch(err => console.error(err))
             }
         }
