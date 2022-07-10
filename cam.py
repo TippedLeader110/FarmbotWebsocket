@@ -11,7 +11,7 @@ img_counter = 0
 data = {}
 ret, frame = cam.read()
 img_name = "farmbot_capture_{}.png".format(random.randint(0, 10000000000000))
-cv2.imwrite('./camera/' + img_name, frame)
+cv2.imwrite('/var/www/farmbot-yii2/web/img/daun' + img_name, frame)
 imgstring = base64.b64encode(frame);
 data['nama'] = img_name
 data['b64'] = imgstring.decode('ascii')
