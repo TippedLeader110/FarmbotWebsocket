@@ -255,10 +255,11 @@ socket.on("locationPush", (data) => {
     console.log('=====================')
     setTimeout(function () {
         port.write(startCommand(currentCMD));
-    }, 6000);
-    setTimeout(function () {
-        startTask(0);
-    }, 6000);
+    }, 6000).then(r => {
+        setTimeout(function () {
+            startTask(0);
+        }, 6000);
+    });
     // executeCommand(writeCommand(startCommand(currentCMD),stringCMD , endCommand()))
     // console.log("Command \n" + command);
     // endCommand()
@@ -322,8 +323,9 @@ parser.on('data', (res) => {
                     console.log('=====================')
                     setTimeout(function () {
                         port.write(t);
-                    }, 6000);
-                    socket.emit("TaskDone", { task: currentTask, task_id: currentTask["task_id"], status: true, id: socket.id, foto: file })
+                    }, 6000).then(r => {
+                        socket.emit("TaskDone", { task: currentTask, task_id: currentTask["task_id"], status: true, id: socket.id, foto: file })
+                    });
                 }).catch(err => console.error(err))
             }
         }
