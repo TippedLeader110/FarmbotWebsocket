@@ -3,7 +3,7 @@ import base64
 import random
 import json
 
-cam = cv2.VideoCapture(0)
+cam = cv2.VideoCapture(-1)
 
 # cv2.namedWindow("test")
 
