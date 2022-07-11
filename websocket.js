@@ -254,7 +254,7 @@ socket.on("TaskComplete", (data) => {
     // }, 5000)
 })
 
-
+var tfile;
 parser.on('data', (res) => {
     // console.log("Response");
     if (res == "start") {
@@ -263,7 +263,6 @@ parser.on('data', (res) => {
     } else {
         console.log(res + "(" + typeof res + ")");
     }
-    var tfile;
     port.flush(async (err, results) => {
         if (res.match("{")) {
             data = JSON.parse(res)
