@@ -263,7 +263,7 @@ parser.on('data', (res) => {
     } else {
         console.log(res + "(" + typeof res + ")");
     }
-
+    var tfile;
     port.flush(async (err, results) => {
         if (res.match("{")) {
             data = JSON.parse(res)
@@ -284,9 +284,11 @@ parser.on('data', (res) => {
                 ambilGambarPython().then(async (file) => {
                     let t = "r\n" + 0 + "\n"
                     port.write(t);
+                    tfile = file;
                 }).catch(err => console.error(err))
             } else if (data.status == "2") {
-                socket.emit("TaskDone", { task: currentTask, task_id: currentTask["task_id"], status: true, id: socket.id, foto: file })
+                socket.emit("TaskDone", { task: currentTask, task_id: currentTask["task_id"], status: true, id: socket.id, foto: tfile })
+                
             }
         }
     });
