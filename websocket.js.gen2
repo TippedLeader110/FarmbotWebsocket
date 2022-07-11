@@ -231,17 +231,53 @@ socket.on("initial", (data) => {
     // }, 10000)
 })
 var nomorAntrian = 0;
-var workingTaskLocation;
-socket.on("locationPush", async (data) => {
+socket.on("locationPush",async (data) => {
     console.log("Location")
     console.log(data)
+    // console.log("Start Command")
+    // startCommand()
+    // var stringCMD = ""
+    daftarAntrian = [];
+    nomorAntrian = 0;
+    daftarAntrian.push(moveCommand(data[0]));
+    if (currentCMD == 1) {
+        // data.forEach(pos => {
+        //     command = command + moveCommand(pos)
+        // })
+    } else if (currentCMD == 2) {
+        // daftarAntrian[0] = daftarAntrian[0]+"dd\n0";
+    } else if (currentCMD == 3) {
 
-    workingTaskLocation = moveCommand(data[0]);
+    } else if (currentCMD == 4) {
+        for (let i = 0; i < data.length; i++) {
+            // daftarAntrian.push(getnpkCommand(data[i]));
+            // console.log(typeof stringCMD)
+        }
+    }
+    // console.log("Execute  : " + daftarAntrian[0])
+    // console.log("End Command")
+    // console.log(stringCMD)
+    // command = 
+    console.log('=====================')
+    console.log(startCommand(currentCMD))
+    console.log('=====================')
+    await delay(6000);
     port.write(startCommand(currentCMD));
+    await delay(6000);
+    startTask(0);
+    
+    // executeCommand(writeCommand(startCommand(currentCMD),stringCMD , endCommand()))
+    // console.log("Command \n" + command);
+    // endCommand()
+
 })
 
-var startTask = () => {
-    port.write(workingTaskLocation);
+var startTask = (antrian) => {
+    console.log('=====================')
+    console.log(daftarAntrian[antrian])
+    console.log('=====================')
+    if (nomorAntrian < daftarAntrian.length) port.write(daftarAntrian[antrian]);
+
 }
 
 socket.on("TaskComplete", (data) => {
@@ -264,13 +300,18 @@ parser.on('data', (res) => {
         console.log(res + "(" + typeof res + ")");
     }
 
-    port.flush(async (err, results) => {
+    port.flush(async(err, results) => {
         if (res.match("{")) {
             data = JSON.parse(res)
             console.log(data)
-            if (data.status == "c") {
-                startTask();
-            } else if (data.status == "1") {
+            if (data.status == 1) {
+                if (nomorAntrian + 1 > daftarAntrian.length) {
+                    nomorAntrian++;
+                    startTask(nomorAntrian);
+                } else {
+                    executeCommand(endCommand());
+                }
+            } else if (data.status == 2) {
                 if (data.cmd == 6) {
                     console.log("Ambil nilai npk \nMengirim perintah mqtt id => \n");
                     console.log(currentTask["task_id"]);
@@ -283,10 +324,17 @@ parser.on('data', (res) => {
                 }
                 ambilGambarPython().then(async (file) => {
                     let t = "r\n" + 0 + "\n"
+                    console.log('=====================')
+                    console.log(t)
+                    console.log('=====================')
+                    await delay(6000);
                     port.write(t);
+                    await delay(6000);
+                    // setTimeout(function () {
+                    // }, 6000).then(r => {
+                    // });
+                    socket.emit("TaskDone", { task: currentTask, task_id: currentTask["task_id"], status: true, id: socket.id, foto: file })
                 }).catch(err => console.error(err))
-            } else if (data.status == "2") {
-                socket.emit("TaskDone", { task: currentTask, task_id: currentTask["task_id"], status: true, id: socket.id, foto: file })
             }
         }
     });
