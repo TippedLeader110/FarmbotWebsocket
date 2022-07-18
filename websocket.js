@@ -248,7 +248,7 @@ var startTask = () => {
 }
 
 socket.on("TaskComplete", (data) => {
-    console.log("TaskComplete Seq", data);
+    console.log("TaskComplete Seq => ", data);
     if (!data) {
         console.log("Retrying Failed Task")
     }
