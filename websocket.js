@@ -218,10 +218,13 @@ socket.on("TaskEmpty", (data) => {
     // ], 5000)
 })
 
+var reset = 0;
+
 socket.on("initial", (data) => {
     console.log(data)
     // prosesTask(data)
     currentTask = data
+    reset = data.r;
     socket.emit("TaskProc", { task_id: data["task_id"], status: true, id: socket.id })
     currentCMD = data.cmd
     console.log("Type Command : " + data.cmd)
@@ -281,7 +284,7 @@ parser.on('data', (res) => {
                     });
                 }
                 ambilGambarPython().then(async (file) => {
-                    let t = "r\n" + 0 + "\n"
+                    let t = "r\n" + reset + "\n"
                     port.write(t);
                     tfile = file;
                 }).catch(err => console.error(err))
