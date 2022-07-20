@@ -284,6 +284,11 @@ parser.on('data', (res) => {
                         }
                     });
                 }
+
+                if(data.cmd == 6){
+                    delay(12000);
+                }
+
                 ambilGambarPython().then(async (file) => {
                     let t = "r\n" + reset + "\n"
                     port.write(t);
