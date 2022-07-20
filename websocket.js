@@ -274,6 +274,7 @@ parser.on('data', (res) => {
                 startTask();
             } else if (data.status == "1") {
                 if (data.cmd == 6) {
+                    reset = 1;
                     console.log("Ambil nilai npk \nMengirim perintah mqtt id => \n");
                     console.log(currentTask["task_id"]);
                     console.log("Topik => " + topic_to_sub);
