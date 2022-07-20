@@ -259,7 +259,7 @@ socket.on("TaskComplete", (data) => {
 
 var tfile;
 parser.on('data', (res) => {
-    // console.log("Response");
+    console.log("Response => " + res);
     if (res == "start") {
         fserial = true;
         console.log("Terhubung")
