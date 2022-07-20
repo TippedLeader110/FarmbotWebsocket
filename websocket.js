@@ -287,7 +287,7 @@ parser.on('data', (res) => {
 
                 if(data.cmd == 6){
                     console.log("Delay")
-                    delay(12000);
+                    await delay(12000);
                     console.log("Delay stop")
                 }
 
