@@ -100,7 +100,7 @@ async function fotoBadan() {
             const spawn = require('child_process').spawn;
             var scriptExecution = spawn('python3', ["./cambody.py", 'args']);
             var file
-            scriptExecution.stdout.on('data', (data) => {
+            scriptExecution.stdout.on('data',async (data) => {
                 // console.log(data)
                 var resp = new TextDecoder("utf-8").decode(data);
                 // console.log(resp[1])
@@ -126,7 +126,7 @@ async function fotoBadan() {
             });
 
             // Handle error output
-            scriptExecution.stderr.on('data', (data) => {
+            scriptExecution.stderr.on('data', async (data) => {
                 var string = new TextDecoder("utf-8").decode(data);
                 console.log('error', string);
                 // As said before, convert the Uint8Array to a readable string.
