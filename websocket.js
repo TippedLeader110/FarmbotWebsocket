@@ -100,7 +100,7 @@ async function fotoBadan() {
             const spawn = require('child_process').spawn;
             var scriptExecution = spawn('python3', ["./cambody.py", 'args']);
             var file
-            scriptExecution.stdout.on('data',async (data) => {
+            scriptExecution.stdout.on('data', async (data) => {
                 // console.log(data)
                 var resp = new TextDecoder("utf-8").decode(data);
                 // console.log(resp[1])
@@ -143,13 +143,22 @@ async function fotoBadan() {
             });
             scriptExecution.stdin.write('start');
             scriptExecution.stdin.end();
-        }else{
-            resolve({skip : true})
+        } else {
+            resolve({ skip: true })
         }
     })
 }
 
-setInterval(fotoBadan(), 10000);
+// setInterval(fotoBadan(), 10000);
+Promise.resolve()
+    .then(async (r) => {
+        console.log(r)
+        await fotoBadan()
+    })
+    .catch(async (r) => {
+        console.error(r)
+        await fotoBadan()
+    })
 // fotoBadan()
 
 function ambilGambarPython() {
