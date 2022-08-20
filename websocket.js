@@ -95,7 +95,7 @@ var fbFinished = true;
 
 async function fotoBadan() {
     if (checkTime(8, 16) && fbFinished) {
-        finished = false;
+        fbFinished = false;
         return new Promise(async (resolve, reject) => {
             const spawn = require('child_process').spawn;
             var scriptExecution = spawn('python3', ["./cambody.py", 'args']);
