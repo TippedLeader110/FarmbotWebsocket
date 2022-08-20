@@ -91,10 +91,10 @@ function base64_encode(file) {
     return new Buffer(bitmap).toString('base64');
 }
 
-var finished = true;
+var fbFinished = true;
 
 async function fotoBadan() {
-    if (checkTime(8, 16) && finished) {
+    if (checkTime(8, 16) && fbFinished) {
         finished = false;
         return new Promise(async (resolve, reject) => {
             const spawn = require('child_process').spawn;
@@ -111,7 +111,7 @@ async function fotoBadan() {
                 // resp = JSON.parse(resp);
                 socket.emit("BodyImg", result);
                 await delay(1800000);
-                finished = true;
+                fbFinished = true;
                 resolve(result)
             });
 
@@ -133,7 +133,7 @@ async function fotoBadan() {
                 // console.log(data);
                 // res.json({result: data});
                 await delay(30000);
-                finished = true;
+                fbFinished = true;
                 reject({ message: string });
             });
 
