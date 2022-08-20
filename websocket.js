@@ -91,9 +91,9 @@ function base64_encode(file) {
 }
 
 
-function fotoBadan() {
+async function fotoBadan() {
     if (checkTime(8, 16)) {
-        return new Promise((resolve, reject) => {
+        return new Promise(async (resolve, reject) => {
             const spawn = require('child_process').spawn;
             var scriptExecution = spawn('python3', ["./cambody.py", 'args']);
             var file
@@ -107,6 +107,7 @@ function fotoBadan() {
                 result['file'] = base64_encode('./camera/' + resp);
                 // resp = JSON.parse(resp);
                 socket.emit("BodyImg", result);
+                await delay(1800000);
                 resolve(result)
             });
 
@@ -127,6 +128,7 @@ function fotoBadan() {
                 // As said before, convert the Uint8Array to a readable string.
                 // console.log(data);
                 // res.json({result: data});
+                await delay(30000);
                 reject({ message: string });
             });
 
