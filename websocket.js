@@ -94,9 +94,9 @@ function base64_encode(file) {
 var fbFinished = true;
 
 async function fotoBadan() {
-    if (checkTime(8, 16) && fbFinished) {
-        fbFinished = false;
-        return new Promise(async (resolve, reject) => {
+    return new Promise(async (resolve, reject) => {
+        if (checkTime(8, 16) && fbFinished) {
+            fbFinished = false;
             const spawn = require('child_process').spawn;
             var scriptExecution = spawn('python3', ["./cambody.py", 'args']);
             var file
@@ -143,8 +143,10 @@ async function fotoBadan() {
             });
             scriptExecution.stdin.write('start');
             scriptExecution.stdin.end();
-        })
-    }
+        }else{
+            resolve({skip : true})
+        }
+    })
 }
 
 setInterval(fotoBadan().then(r => console.log(r)), 10000);
