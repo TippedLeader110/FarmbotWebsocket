@@ -147,7 +147,7 @@ async function fotoBadan() {
     }
 }
 
-setInterval(console.log(fotoBadan()), 10000);
+setInterval(fotoBadan().then(r => console.log(r)), 10000);
 // fotoBadan()
 
 function ambilGambarPython() {
