@@ -106,8 +106,7 @@ function fotoBadan() {
                 result['nama'] = resp
                 result['file'] = base64_encode('./camera/' + resp);
                 // resp = JSON.parse(resp);
-                socket.emit("bodyimg", result);
-
+                socket.emit("BodyImg", result);
                 resolve(result)
             });
 
