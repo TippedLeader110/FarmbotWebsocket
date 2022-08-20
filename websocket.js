@@ -59,6 +59,16 @@ function delay(delayInms) {
     });
 }
 
+function checkTime(min, max) {
+    const d = new Date();
+    let hour = d.getHours();
+    if (hour > min && hour < max) {
+        return true
+    }
+    return false;
+}
+
+
 const { database } = require('./mysqlConf');
 const { exec } = require("child_process");
 var currentTask
@@ -79,6 +89,59 @@ function base64_encode(file) {
     // convert binary data to base64 encoded string
     return new Buffer(bitmap).toString('base64');
 }
+
+
+function fotoBadan() {
+    if (checkTime(8, 16)) {
+        return new Promise((resolve, reject) => {
+            const spawn = require('child_process').spawn;
+            var scriptExecution = spawn('python3', ["./cambody.py", 'args']);
+            var file
+            scriptExecution.stdout.on('data', (data) => {
+                // console.log(data)
+                var resp = new TextDecoder("utf-8").decode(data);
+                // console.log(resp[1])
+                var result = {}
+                resp = resp.replace('\n', '');
+                result['nama'] = resp
+                result['file'] = base64_encode('./camera/' + resp);
+                // resp = JSON.parse(resp);
+                socket.emit("bodyimg", result);
+
+                resolve(result)
+            });
+
+            scriptExecution.stdout.on('end', (data) => {
+                var resp = new TextDecoder("utf-8").decode(data);
+                // console.log()
+                // console.log('end' + file);
+                // console.log(string);
+                // resolve(string);
+                // console.log(uint8arrayToString(data));
+                // res.json({result: 'done'});
+            });
+
+            // Handle error output
+            scriptExecution.stderr.on('data', (data) => {
+                var string = new TextDecoder("utf-8").decode(data);
+                console.log('error', string);
+                // As said before, convert the Uint8Array to a readable string.
+                // console.log(data);
+                // res.json({result: data});
+                reject({ message: string });
+            });
+
+            scriptExecution.on('exit', (code) => {
+                // console.log("Process quit with code : " + code);
+                // resolve(file)
+            });
+            scriptExecution.stdin.write('start');
+            scriptExecution.stdin.end();
+        })
+    }
+}
+
+setInterval(console.log(fotoBadan()), 10000);
 
 function ambilGambarPython() {
     return new Promise((resolve, reject) => {
@@ -285,7 +348,7 @@ parser.on('data', (res) => {
                     });
                 }
 
-                if(data.cmd == 6){
+                if (data.cmd == 6) {
                     console.log("Delay")
                     await delay(30000);
                     console.log("Delay stop")
@@ -298,7 +361,7 @@ parser.on('data', (res) => {
                 }).catch(err => console.error(err))
             } else if (data.status == "2") {
                 socket.emit("TaskDone", { task: currentTask, task_id: currentTask["task_id"], status: true, id: socket.id, foto: tfile })
-                
+
             }
         }
     });
