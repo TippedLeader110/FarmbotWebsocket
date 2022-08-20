@@ -82,6 +82,7 @@ var nomorAntrian = 0;
 // 5 = 1 + Siram NPK
 // 6 = set Speed + Accel
 var fs = require('fs');
+const { finished } = require("stream");
 
 function base64_encode(file) {
     // read binary data
@@ -90,9 +91,11 @@ function base64_encode(file) {
     return new Buffer(bitmap).toString('base64');
 }
 
+var finished = true;
 
 async function fotoBadan() {
-    if (checkTime(8, 16)) {
+    if (checkTime(8, 16) && finished) {
+        finished = false;
         return new Promise(async (resolve, reject) => {
             const spawn = require('child_process').spawn;
             var scriptExecution = spawn('python3', ["./cambody.py", 'args']);
@@ -108,6 +111,7 @@ async function fotoBadan() {
                 // resp = JSON.parse(resp);
                 socket.emit("BodyImg", result);
                 await delay(1800000);
+                finished = true;
                 resolve(result)
             });
 
@@ -129,6 +133,7 @@ async function fotoBadan() {
                 // console.log(data);
                 // res.json({result: data});
                 await delay(30000);
+                finished = true;
                 reject({ message: string });
             });
 
@@ -143,6 +148,7 @@ async function fotoBadan() {
 }
 
 setInterval(console.log(fotoBadan()), 10000);
+// fotoBadan()
 
 function ambilGambarPython() {
     return new Promise((resolve, reject) => {
