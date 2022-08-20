@@ -94,7 +94,7 @@ function base64_encode(file) {
 var fbFinished = true;
 
 async function fotoBadan() {
-    return new Promise(async (resolve, reject) => {
+    return new Promise((resolve, reject) => {
         if (checkTime(8, 16) && fbFinished) {
             fbFinished = false;
             const spawn = require('child_process').spawn;
@@ -149,7 +149,7 @@ async function fotoBadan() {
     })
 }
 
-setInterval(fotoBadan().then(r => console.log(r)), 10000);
+setInterval(fotoBadan(), 10000);
 // fotoBadan()
 
 function ambilGambarPython() {
