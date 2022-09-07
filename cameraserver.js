@@ -103,21 +103,40 @@ async function fotoBadan() {
     })
 }
 
-socket.on("connect", async () => {
-    console.log(socket.id); // x8WIv7-mJelg7on_ALbx
-    console.log("Socket Get")
-    while (true) {
+var rundude = true
+
+var unlimitedPower = async () => {
+    while (rundude) {
         await fotoBadan()
     }
-    // Promise.resolve()
-    //     .then(async (r) => {
-    //         console.log(r)
-    //         fotoBadan()
-    //     })
-    //     .catch(async (r) => {
-    //         console.error(r)
-    //         fotoBadan()
-    //     })
-    // setTimeout(() => [
-    // ], 5000)
+}
+
+var printstatus = async () => {
+    socket.emit("cameraserversts", { "status": rundude })
+}
+
+socket.on("connect", async () => {
+    rundude = true
+    console.log(socket.id); // x8WIv7-mJelg7on_ALbx
+    console.log("Socket Get")
+    unlimitedPower()
 });
+
+socket.on("disconnect", async () => {
+    rundude = false;
+})
+
+socket.on("cameraserversts", async () => {
+    printstatus()
+})
+
+socket.on("forcestartcs", async () => {
+    rundude = true;
+    printstatus()
+    unlimitedPower()
+})
+
+socket.on("forcestopcs", async () => {
+    rundude = false;
+    printstatus()
+})
