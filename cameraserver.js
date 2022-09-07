@@ -136,7 +136,22 @@ socket.on("forcestartcs", async () => {
     unlimitedPower()
 })
 
+
+app.post('/forcestartcs', (req, res) => {
+    rundude = true;
+    printstatus()
+    res.json({"status" : true})
+    unlimitedPower()
+})
+
+
 socket.on("forcestopcs", async () => {
     rundude = false;
     printstatus()
+})
+
+app.post('/forcestopcs', (req, res) => {
+    rundude = false;
+    printstatus()
+    res.json({"status" : true})
 })
