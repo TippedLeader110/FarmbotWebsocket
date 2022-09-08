@@ -112,7 +112,8 @@ var unlimitedPower = async () => {
 }
 
 var printstatus = async () => {
-    socket.emit("cameraserversts", { "status": rundude })
+    console.log({rundude})
+    socket.emit("cameraresponse", { "status": rundude })
 }
 
 socket.on("connect", async () => {
@@ -134,6 +135,7 @@ socket.on("forcestartcs", async () => {
     rundude = true;
     printstatus()
     unlimitedPower()
+    console.log("started")
 })
 
 
