@@ -14,13 +14,27 @@ const app = express();
 const httpServer = createServer(app);
 
 
+var seconds = 0;
+var counter
+var currentTimer = 0;
 
 function delay(delayInms) {
     return new Promise(resolve => {
+        countDelay()
+        currentTimer = delayTimer
         setTimeout(() => {
+            clearInterval(counter);
+            currentTimer = 0;
             resolve(2);
         }, delayInms);
     });
+}
+
+function countDelay(){
+    seconds = 0;
+    counter = setInterval(function(){
+        seconds++;
+    }, 1000);
 }
 
 function checkTime(min, max) {
@@ -41,6 +55,7 @@ function base64_encode(file) {
 }
 
 var fbFinished = true;
+var delayTimer = 1800000;
 
 async function fotoBadan() {
     return new Promise((resolve, reject) => {
@@ -63,7 +78,7 @@ async function fotoBadan() {
                 socket.emit("BodyImg", result);
                 console.log("Delay 1800000ms")
                 console.log(result["nama"])
-                await delay(1800000);
+                await delay(delayTimer);
                 console.log("Delay Done")
                 fbFinished = true;
                 resolve(result)
@@ -138,6 +153,24 @@ socket.on("forcestartcs", async () => {
     console.log("started")
 })
 
+socket.on("checkTimer", async () => {
+    responseTimer()
+})
+
+function responseTimer(){
+    console.log({
+        rundude,
+        delayTimer,
+        currentTimer,
+        seconds
+    })
+    socket.emit("responseTimer", {delayTimer, currentTimer, seconds})
+}
+
+socket.on("setTimer", async(data) => {
+    delayTimer = data.timer
+    responseTimer()
+})
 
 app.post('/forcestartcs', (req, res) => {
     rundude = true;
