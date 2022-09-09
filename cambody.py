@@ -6,7 +6,6 @@ import json
 cam = cv2.VideoCapture(2)
 
 # cv2.namedWindow("test")
-
 if cam.isOpened():
     img_counter = 0
     data = {}
@@ -18,12 +17,11 @@ if cam.isOpened():
     data['b64'] = imgstring.decode('ascii')
     # value = json.dumps(data)
     # value = json.loads(value)
-    # value = "{ nama : '" + str(img_name) + "', b64 : '" + str(imgstring.encode()) + "'}";
+    # value = "{ status : true,  nama : '" + str(img_name) + "', b64 : '" + str(imgstring.encode()) + "'}";
     # print("{} written!".format(img_name))
-    print(img_name)
-    img_counter += 1
-
     cam.release()
+    print(img_name)
+    # img_counter += 1
 else:
-    print("{status : false}")
+    print("false")
 cv2.destroyAllWindows()

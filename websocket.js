@@ -105,13 +105,19 @@ async function fotoBadan() {
                 var resp = new TextDecoder("utf-8").decode(data);
                 // console.log(resp[1])
                 var result = {}
-                resp = resp.replace('\n', '');
-                result['nama'] = resp
-                result['file'] = base64_encode('./camera/' + resp);
-                // resp = JSON.parse(resp);
-                socket.emit("BodyImg", result);
-                await delay(1800000);
-                fbFinished = true;
+                if (resp == "false") {
+                    console.log("Failed to 'AMBIL GAMBAR' ")
+                    result['status'] = false
+                } else {
+                    resp = resp.replace('\n', '');
+                    result['nama'] = resp
+                    result['status'] = true
+                    result['file'] = base64_encode('./camera/' + resp);
+                    // resp = JSON.parse(resp);
+                    socket.emit("BodyImg", result);
+                    await delay(1800000);
+                    fbFinished = true;
+                }
                 resolve(result)
             });
 
@@ -171,10 +177,17 @@ function ambilGambarPython() {
             var resp = new TextDecoder("utf-8").decode(data);
             // console.log(resp[1])
             var result = {}
-            resp = resp.replace('\n', '');
-            result['nama'] = resp
-            result['file'] = base64_encode('./camera/' + resp);
-            // resp = JSON.parse(resp);
+            if (resp == "false") {
+                console.log("Failed to 'AMBIL GAMBAR' ")
+                result['status'] = false
+            } else {
+                resp = resp.replace('\n', '');
+                result['nama'] = resp
+                result['status'] = true
+                result['file'] = base64_encode('./camera/' + resp);
+                // resp = JSON.parse(resp);
+                socket.emit("BodyImg", result);
+            }
             resolve(result)
         });
 
