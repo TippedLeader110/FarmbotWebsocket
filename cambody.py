@@ -44,7 +44,6 @@ if cam.isOpened():
     f = imageio.imread('./camera/body_' + img_name, as_gray=True)
     # print(img_estim(f, 80))
     if(img_estim(f, 80)=='dark'):
-        os.system("v4l2-ctl --device /dev/video2 -c exposure_auto=1")
         os.system("v4l2-ctl --device /dev/video2 -c exposure_absolute=40")
         cam.release()
         cam = cv2.VideoCapture(2)
