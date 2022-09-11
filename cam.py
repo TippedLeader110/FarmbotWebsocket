@@ -5,6 +5,9 @@ import json
 import time
 
 cam = cv2.VideoCapture(0)
+cam.set(cv2.CAP_PROP_AUTO_EXPOSURE, 3) # auto mode
+# cam.set(cv2.CAP_PROP_AUTO_EXPOSURE, 1) # manual mode
+# cam.set(cv2.CAP_PROP_EXPOSURE, desired_exposure_value)
 
 # cv2.namedWindow("test")
 if cam.isOpened():
