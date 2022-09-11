@@ -2,11 +2,13 @@ import cv2
 import base64
 import random
 import json
+import time
 
 cam = cv2.VideoCapture(0)
 
 # cv2.namedWindow("test")
 if cam.isOpened():
+    time.sleep(5)
     img_counter = 0
     data = {}
     ret, frame = cam.read()
