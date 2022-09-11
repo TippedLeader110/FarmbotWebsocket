@@ -3,9 +3,26 @@ import base64
 import random
 import json
 import time
+import os
+
+def set_manual_exposure(dev_video_id, exposure_time):
+    commands = [
+        ("v4l2-ctl --device /dev/video"+str(id)+" -c exposure_auto=3"),
+        ("v4l2-ctl --device /dev/video"+str(id)+" -c exposure_auto=1"),
+        ("v4l2-ctl --device /dev/video"+str(id)+" -c exposure_absolute=")
+    ]
+    for c in commands: 
+        os.system(c)
+
+# set_manual_exposure(2, 1)
+os.system("v4l2-ctl --device /dev/video2 -c exposure_auto=1")
+os.system("v4l2-ctl --device /dev/video2 -c exposure_absolute=28")
 
 cam = cv2.VideoCapture(2)
-cam.set(cv2.CAP_PROP_AUTO_EXPOSURE, 3) # auto mode
+# cam.set(cv2.CAP_PROP_AUTO_EXPOSURE, )
+
+
+
 # cv2.namedWindow("test")
 if cam.isOpened():
     time.sleep(5)
