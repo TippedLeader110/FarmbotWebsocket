@@ -260,15 +260,15 @@ var sendded = false;
 var checkConnect = () => {
     tryN++;
     if (fserial) {
-        Promise.resolve()
-            .then(async (r) => {
-                console.log(r)
-                await fotoBadan()
-            })
-            .catch(async (r) => {
-                console.error(r)
-                await fotoBadan()
-            })
+        // Promise.resolve()
+        //     .then(async (r) => {
+        //         console.log(r)
+        //         await fotoBadan()
+        //     })
+        //     .catch(async (r) => {
+        //         console.error(r)
+        //         await fotoBadan()
+        //     })
         console.log("Get Task");
         socket.emit("TaskStart", { id: 0, status: true, id: socket.id })
         // if(!sendded){
