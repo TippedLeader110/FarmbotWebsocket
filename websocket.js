@@ -104,6 +104,7 @@ function ambilGambarPython() {
             if (resp.includes("false")) {
                 console.log("Failed to 'AMBIL GAMBAR' ")
                 result['status'] = false
+                socket.emit("BodyImg", result);
             } else {
                 resp = resp.replace('\n', '');
                 result['nama'] = resp
