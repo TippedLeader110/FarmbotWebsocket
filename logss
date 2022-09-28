@@ -1,0 +1,411 @@
+2022-09-18T11:01:15: Server running on port 3100
+2022-09-18T11:01:16: MQTT Conected
+2022-09-18T11:01:16: subscribe ke topic => farmbot/sendnpk
+2022-09-18T11:01:16: y9l-GlCXmQKK--GwAABo
+2022-09-18T11:01:16: Mencoba menghubungkan ke Arduino.....
+2022-09-18T11:01:16: Mencoba kembali.....(1)
+2022-09-18T11:01:17: Response => order :m
+2022-09-18T11:01:17: order :m(string)
+2022-09-18T11:01:18: Response => value :700
+2022-09-18T11:01:18: value :700(string)
+2022-09-18T11:01:21: Mencoba kembali.....(2)
+2022-09-18T11:01:26: Mencoba kembali.....(3)
+2022-09-18T11:01:26: Response => order :a
+2022-09-18T11:01:27: order :a(string)
+2022-09-18T11:01:28: Response => value :600
+2022-09-18T11:01:28: value :600(string)
+2022-09-18T11:01:31: Mencoba kembali.....(4)
+2022-09-18T11:01:36: Mencoba kembali.....(5)
+2022-09-18T11:01:41: Mencoba kembali.....(6)
+2022-09-18T11:01:46: Mencoba kembali.....(7)
+2022-09-18T11:01:51: Mencoba kembali.....(8)
+2022-09-18T11:01:56: Mencoba kembali.....(9)
+2022-09-18T11:02:01: Mencoba kembali.....(10)
+2022-09-18T11:02:01: Error: Tidak dapat terhubung dengan Arduino Mego 2560
+2022-09-18T11:02:01:     at checkConnect (/home/pi/nodejs/FarmbotWebsocket/websocket.js:280:19)
+2022-09-18T11:02:01:     at Timeout._onTimeout (/home/pi/nodejs/FarmbotWebsocket/websocket.js:283:17)
+2022-09-18T11:02:01:     at listOnTimeout (internal/timers.js:554:17)
+2022-09-18T11:02:01:     at processTimers (internal/timers.js:497:7)
+2022-09-18T11:02:04: Server running on port 3100
+2022-09-18T11:02:04: MQTT Conected
+2022-09-18T11:02:04: subscribe ke topic => farmbot/sendnpk
+2022-09-18T11:02:04: VNsIdkEMXTbV7qUAAABq
+2022-09-18T11:02:04: Mencoba menghubungkan ke Arduino.....
+2022-09-18T11:02:04: Mencoba kembali.....(1)
+2022-09-18T11:02:09: Mencoba kembali.....(2)
+2022-09-18T11:02:14: Mencoba kembali.....(3)
+2022-09-18T11:02:19: Mencoba kembali.....(4)
+2022-09-18T11:02:24: Mencoba kembali.....(5)
+2022-09-18T11:02:29: Mencoba kembali.....(6)
+2022-09-18T11:02:34: Mencoba kembali.....(7)
+2022-09-18T11:02:39: Mencoba kembali.....(8)
+2022-09-18T11:02:44: Mencoba kembali.....(9)
+2022-09-18T11:02:49: Mencoba kembali.....(10)
+2022-09-18T11:02:49: Error: Tidak dapat terhubung dengan Arduino Mego 2560
+2022-09-18T11:02:49:     at checkConnect (/home/pi/nodejs/FarmbotWebsocket/websocket.js:280:19)
+2022-09-18T11:02:49:     at Timeout._onTimeout (/home/pi/nodejs/FarmbotWebsocket/websocket.js:283:17)
+2022-09-18T11:02:49:     at listOnTimeout (internal/timers.js:554:17)
+2022-09-18T11:02:49:     at processTimers (internal/timers.js:497:7)
+2022-09-18T11:02:51: Server running on port 3100
+2022-09-18T11:02:51: MQTT Conected
+2022-09-18T11:02:52: JmZHeJVE_2_8XZDfAABs
+2022-09-18T11:02:52: Mencoba menghubungkan ke Arduino.....
+2022-09-18T11:02:52: Mencoba kembali.....(1)
+2022-09-18T11:02:52: subscribe ke topic => farmbot/sendnpk
+2022-09-18T11:02:57: Mencoba kembali.....(2)
+2022-09-18T11:03:02: Mencoba kembali.....(3)
+2022-09-18T11:03:07: Mencoba kembali.....(4)
+2022-09-18T11:03:12: Mencoba kembali.....(5)
+2022-09-18T11:03:17: Mencoba kembali.....(6)
+2022-09-18T11:03:22: Mencoba kembali.....(7)
+2022-09-18T11:03:27: Mencoba kembali.....(8)
+2022-09-18T11:03:32: Mencoba kembali.....(9)
+2022-09-18T11:03:37: Mencoba kembali.....(10)
+2022-09-18T11:03:37: Error: Tidak dapat terhubung dengan Arduino Mego 2560
+2022-09-18T11:03:37:     at checkConnect (/home/pi/nodejs/FarmbotWebsocket/websocket.js:280:19)
+2022-09-18T11:03:37:     at Timeout._onTimeout (/home/pi/nodejs/FarmbotWebsocket/websocket.js:283:17)
+2022-09-18T11:03:37:     at listOnTimeout (internal/timers.js:554:17)
+2022-09-18T11:03:37:     at processTimers (internal/timers.js:497:7)
+2022-09-18T11:03:39: Server running on port 3100
+2022-09-18T11:03:39: MQTT Conected
+2022-09-18T11:03:39: subscribe ke topic => farmbot/sendnpk
+2022-09-18T11:03:39: NV183WSEP9m6AU76AABu
+2022-09-18T11:03:39: Mencoba menghubungkan ke Arduino.....
+2022-09-18T11:03:39: Mencoba kembali.....(1)
+2022-09-18T11:03:40: Response => order :m
+2022-09-18T11:03:40: order :m(string)
+2022-09-18T11:03:41: Response => value :700
+2022-09-18T11:03:41: value :700(string)
+2022-09-18T11:03:44: Mencoba kembali.....(2)
+2022-09-18T11:03:49: Mencoba kembali.....(3)
+2022-09-18T11:03:50: Response => order :a
+2022-09-18T11:03:50: order :a(string)
+2022-09-18T11:03:51: Response => value :600
+2022-09-18T11:03:51: value :600(string)
+2022-09-18T11:03:54: Mencoba kembali.....(4)
+2022-09-18T11:03:59: Mencoba kembali.....(5)
+2022-09-18T11:04:04: Mencoba kembali.....(6)
+2022-09-18T11:04:09: Mencoba kembali.....(7)
+2022-09-18T11:04:14: Mencoba kembali.....(8)
+2022-09-18T11:04:19: Mencoba kembali.....(9)
+2022-09-18T11:04:24: Mencoba kembali.....(10)
+2022-09-18T11:04:24: Error: Tidak dapat terhubung dengan Arduino Mego 2560
+2022-09-18T11:04:24:     at checkConnect (/home/pi/nodejs/FarmbotWebsocket/websocket.js:280:19)
+2022-09-18T11:04:24:     at Timeout._onTimeout (/home/pi/nodejs/FarmbotWebsocket/websocket.js:283:17)
+2022-09-18T11:04:24:     at listOnTimeout (internal/timers.js:554:17)
+2022-09-18T11:04:24:     at processTimers (internal/timers.js:497:7)
+2022-09-18T11:04:26: Server running on port 3100
+2022-09-18T11:04:27: MQTT Conected
+2022-09-18T11:04:27: subscribe ke topic => farmbot/sendnpk
+2022-09-18T11:04:27: MOXpIBD59oqTLYLCAABw
+2022-09-18T11:04:27: Mencoba menghubungkan ke Arduino.....
+2022-09-18T11:04:27: Mencoba kembali.....(1)
+2022-09-18T11:04:29: Response => order :�R
+2022-09-18T11:04:29: order :�R(string)
+2022-09-18T11:04:31: Response => value :0
+2022-09-18T11:04:31: value :0(string)
+2022-09-18T11:04:32: Mencoba kembali.....(2)
+2022-09-18T11:04:37: Mencoba kembali.....(3)
+2022-09-18T11:04:42: Mencoba kembali.....(4)
+2022-09-18T11:04:47: Mencoba kembali.....(5)
+2022-09-18T11:04:52: Mencoba kembali.....(6)
+2022-09-18T11:04:57: Mencoba kembali.....(7)
+2022-09-18T11:05:02: Mencoba kembali.....(8)
+2022-09-18T11:05:07: Mencoba kembali.....(9)
+2022-09-18T11:05:12: Mencoba kembali.....(10)
+2022-09-18T11:05:12: Error: Tidak dapat terhubung dengan Arduino Mego 2560
+2022-09-18T11:05:12:     at checkConnect (/home/pi/nodejs/FarmbotWebsocket/websocket.js:280:19)
+2022-09-18T11:05:12:     at Timeout._onTimeout (/home/pi/nodejs/FarmbotWebsocket/websocket.js:283:17)
+2022-09-18T11:05:12:     at listOnTimeout (internal/timers.js:554:17)
+2022-09-18T11:05:12:     at processTimers (internal/timers.js:497:7)
+2022-09-18T11:05:14: Server running on port 3100
+2022-09-18T11:05:14: MQTT Conected
+2022-09-18T11:05:15: subscribe ke topic => farmbot/sendnpk
+2022-09-18T11:05:15: 3WsvtqxJi_WttFFIAABy
+2022-09-18T11:05:15: Mencoba menghubungkan ke Arduino.....
+2022-09-18T11:05:15: Mencoba kembali.....(1)
+2022-09-18T11:05:16: Response => order :m
+2022-09-18T11:05:16: order :m(string)
+2022-09-18T11:05:17: Response => value :700
+2022-09-18T11:05:17: value :700(string)
+2022-09-18T11:05:20: Mencoba kembali.....(2)
+2022-09-18T11:05:25: Mencoba kembali.....(3)
+2022-09-18T11:05:25: Response => order :a
+2022-09-18T11:05:25: order :a(string)
+2022-09-18T11:05:26: Response => value :600
+2022-09-18T11:05:26: value :600(string)
+2022-09-18T11:05:30: Mencoba kembali.....(4)
+2022-09-18T11:05:35: Mencoba kembali.....(5)
+2022-09-18T11:05:40: Mencoba kembali.....(6)
+2022-09-18T11:35:05: Server running on port 3100
+2022-09-18T11:35:05: MQTT Conected
+2022-09-18T11:35:05: subscribe ke topic => farmbot/sendnpk
+2022-09-18T11:35:06: XFJPB1jTB_ohX5ajAAB0
+2022-09-18T11:35:06: Mencoba menghubungkan ke Arduino.....
+2022-09-18T11:35:06: Mencoba kembali.....(1)
+2022-09-18T11:35:07: Response => order :m
+2022-09-18T11:35:07: order :m(string)
+2022-09-18T11:35:08: Response => value :700
+2022-09-18T11:35:08: value :700(string)
+2022-09-18T11:35:11: Mencoba kembali.....(2)
+2022-09-18T11:35:16: Response => order :a
+2022-09-18T11:35:16: order :a(string)
+2022-09-18T11:35:16: Mencoba kembali.....(3)
+2022-09-18T11:35:17: Response => value :600
+2022-09-18T11:35:17: value :600(string)
+2022-09-18T11:35:21: Mencoba kembali.....(4)
+2022-09-18T11:35:26: Mencoba kembali.....(5)
+2022-09-18T11:35:31: Mencoba kembali.....(6)
+2022-09-18T11:35:36: Mencoba kembali.....(7)
+2022-09-18T11:35:41: Mencoba kembali.....(8)
+2022-09-18T11:35:46: Mencoba kembali.....(9)
+2022-09-18T11:35:51: Mencoba kembali.....(10)
+2022-09-18T11:35:51: Error: Tidak dapat terhubung dengan Arduino Mego 2560
+2022-09-18T11:35:51:     at checkConnect (/home/pi/nodejs/FarmbotWebsocket/websocket.js:280:19)
+2022-09-18T11:35:51:     at Timeout._onTimeout (/home/pi/nodejs/FarmbotWebsocket/websocket.js:283:17)
+2022-09-18T11:35:51:     at listOnTimeout (internal/timers.js:554:17)
+2022-09-18T11:35:51:     at processTimers (internal/timers.js:497:7)
+2022-09-18T11:35:53: Server running on port 3100
+2022-09-18T11:35:53: MQTT Conected
+2022-09-18T11:35:53: subscribe ke topic => farmbot/sendnpk
+2022-09-18T11:35:53: xdxYPWX6BqMSlSL0AAB2
+2022-09-18T11:35:53: Mencoba menghubungkan ke Arduino.....
+2022-09-18T11:35:53: Mencoba kembali.....(1)
+2022-09-18T11:35:58: Mencoba kembali.....(2)
+2022-09-18T11:36:03: Mencoba kembali.....(3)
+2022-09-18T11:36:08: Mencoba kembali.....(4)
+2022-09-18T11:36:13: Mencoba kembali.....(5)
+2022-09-18T11:36:18: Mencoba kembali.....(6)
+2022-09-18T11:36:23: Mencoba kembali.....(7)
+2022-09-18T11:36:28: Mencoba kembali.....(8)
+2022-09-18T11:36:33: Mencoba kembali.....(9)
+2022-09-18T11:36:38: Mencoba kembali.....(10)
+2022-09-18T11:36:38: Error: Tidak dapat terhubung dengan Arduino Mego 2560
+2022-09-18T11:36:38:     at checkConnect (/home/pi/nodejs/FarmbotWebsocket/websocket.js:280:19)
+2022-09-18T11:36:38:     at Timeout._onTimeout (/home/pi/nodejs/FarmbotWebsocket/websocket.js:283:17)
+2022-09-18T11:36:38:     at listOnTimeout (internal/timers.js:554:17)
+2022-09-18T11:36:38:     at processTimers (internal/timers.js:497:7)
+2022-09-18T11:36:40: Server running on port 3100
+2022-09-18T11:36:41: MQTT Conected
+2022-09-18T11:36:41: subscribe ke topic => farmbot/sendnpk
+2022-09-18T11:36:41: 1cfJo8sHFPS357WzAAB4
+2022-09-18T11:36:41: Mencoba menghubungkan ke Arduino.....
+2022-09-18T11:36:41: Mencoba kembali.....(1)
+2022-09-18T11:36:42: Response => order :m
+2022-09-18T11:36:42: order :m(string)
+2022-09-18T11:36:43: Response => value :700
+2022-09-18T11:36:43: value :700(string)
+2022-09-18T11:36:46: Mencoba kembali.....(2)
+2022-09-18T11:36:51: Mencoba kembali.....(3)
+2022-09-18T11:36:51: Response => order :a
+2022-09-18T11:36:51: order :a(string)
+2022-09-18T11:36:52: Response => value :600
+2022-09-18T11:36:52: value :600(string)
+2022-09-18T11:36:56: Mencoba kembali.....(4)
+2022-09-18T11:37:01: Mencoba kembali.....(5)
+2022-09-18T11:37:06: Mencoba kembali.....(6)
+2022-09-18T11:37:11: Mencoba kembali.....(7)
+2022-09-18T11:37:16: Mencoba kembali.....(8)
+2022-09-18T11:37:21: Mencoba kembali.....(9)
+2022-09-18T11:37:26: Mencoba kembali.....(10)
+2022-09-18T11:37:26: Error: Tidak dapat terhubung dengan Arduino Mego 2560
+2022-09-18T11:37:26:     at checkConnect (/home/pi/nodejs/FarmbotWebsocket/websocket.js:280:19)
+2022-09-18T11:37:26:     at Timeout._onTimeout (/home/pi/nodejs/FarmbotWebsocket/websocket.js:283:17)
+2022-09-18T11:37:26:     at listOnTimeout (internal/timers.js:554:17)
+2022-09-18T11:37:26:     at processTimers (internal/timers.js:497:7)
+2022-09-18T11:37:28: Server running on port 3100
+2022-09-18T11:37:28: MQTT Conected
+2022-09-18T11:37:29: subscribe ke topic => farmbot/sendnpk
+2022-09-18T11:37:29: GYgE9PEN-pzmt7nVAAB6
+2022-09-18T11:37:29: Mencoba menghubungkan ke Arduino.....
+2022-09-18T11:37:29: Mencoba kembali.....(1)
+2022-09-18T11:37:34: Mencoba kembali.....(2)
+2022-09-18T11:37:39: Mencoba kembali.....(3)
+2022-09-18T11:37:44: Mencoba kembali.....(4)
+2022-09-18T11:37:49: Mencoba kembali.....(5)
+2022-09-18T11:37:54: Mencoba kembali.....(6)
+2022-09-18T11:37:59: Mencoba kembali.....(7)
+2022-09-18T11:38:04: Mencoba kembali.....(8)
+2022-09-18T11:38:09: Mencoba kembali.....(9)
+2022-09-18T11:38:14: Mencoba kembali.....(10)
+2022-09-18T11:38:14: Error: Tidak dapat terhubung dengan Arduino Mego 2560
+2022-09-18T11:38:14:     at checkConnect (/home/pi/nodejs/FarmbotWebsocket/websocket.js:280:19)
+2022-09-18T11:38:14:     at Timeout._onTimeout (/home/pi/nodejs/FarmbotWebsocket/websocket.js:283:17)
+2022-09-18T11:38:14:     at listOnTimeout (internal/timers.js:554:17)
+2022-09-18T11:38:14:     at processTimers (internal/timers.js:497:7)
+2022-09-18T11:38:16: Server running on port 3100
+2022-09-18T11:38:16: MQTT Conected
+2022-09-18T11:38:16: subscribe ke topic => farmbot/sendnpk
+2022-09-18T11:38:16: NMiJ2W92LP6GEoo8AAB8
+2022-09-18T11:38:16: Mencoba menghubungkan ke Arduino.....
+2022-09-18T11:38:16: Mencoba kembali.....(1)
+2022-09-18T11:38:21: Mencoba kembali.....(2)
+2022-09-18T11:38:26: Mencoba kembali.....(3)
+2022-09-18T11:38:31: Mencoba kembali.....(4)
+2022-09-18T11:38:36: Mencoba kembali.....(5)
+2022-09-18T11:38:41: Mencoba kembali.....(6)
+2022-09-18T11:38:46: Mencoba kembali.....(7)
+2022-09-18T11:38:51: Mencoba kembali.....(8)
+2022-09-18T11:38:56: Mencoba kembali.....(9)
+2022-09-18T11:39:01: Mencoba kembali.....(10)
+2022-09-18T11:39:01: Error: Tidak dapat terhubung dengan Arduino Mego 2560
+2022-09-18T11:39:01:     at checkConnect (/home/pi/nodejs/FarmbotWebsocket/websocket.js:280:19)
+2022-09-18T11:39:01:     at Timeout._onTimeout (/home/pi/nodejs/FarmbotWebsocket/websocket.js:283:17)
+2022-09-18T11:39:01:     at listOnTimeout (internal/timers.js:554:17)
+2022-09-18T11:39:01:     at processTimers (internal/timers.js:497:7)
+2022-09-18T11:39:03: Server running on port 3100
+2022-09-18T11:39:04: MQTT Conected
+2022-09-18T11:39:04: subscribe ke topic => farmbot/sendnpk
+2022-09-18T11:39:05: RH43yDzM55YvN_3MAAB-
+2022-09-18T11:39:05: Mencoba menghubungkan ke Arduino.....
+2022-09-18T11:39:05: Mencoba kembali.....(1)
+2022-09-18T11:39:05: Response => order :m
+2022-09-18T11:39:05: order :m(string)
+2022-09-18T11:39:06: Response => value :700
+2022-09-18T11:39:06: value :700(string)
+2022-09-18T11:39:10: Mencoba kembali.....(2)
+2022-09-18T11:39:14: Response => order :a
+2022-09-18T11:39:14: order :a(string)
+2022-09-18T11:39:15: Mencoba kembali.....(3)
+2022-09-18T11:39:15: Response => value :600
+2022-09-18T11:39:15: value :600(string)
+2022-09-18T11:39:20: Mencoba kembali.....(4)
+2022-09-18T11:39:25: Mencoba kembali.....(5)
+2022-09-18T11:39:30: Mencoba kembali.....(6)
+2022-09-18T11:39:35: Mencoba kembali.....(7)
+2022-09-18T11:39:40: Mencoba kembali.....(8)
+2022-09-18T11:39:45: Mencoba kembali.....(9)
+2022-09-18T11:39:50: Mencoba kembali.....(10)
+2022-09-18T11:39:50: Error: Tidak dapat terhubung dengan Arduino Mego 2560
+2022-09-18T11:39:50:     at checkConnect (/home/pi/nodejs/FarmbotWebsocket/websocket.js:280:19)
+2022-09-18T11:39:50:     at Timeout._onTimeout (/home/pi/nodejs/FarmbotWebsocket/websocket.js:283:17)
+2022-09-18T11:39:50:     at listOnTimeout (internal/timers.js:554:17)
+2022-09-18T11:39:50:     at processTimers (internal/timers.js:497:7)
+2022-09-18T11:39:52: Server running on port 3100
+2022-09-18T11:39:52: MQTT Conected
+2022-09-18T11:39:52: subscribe ke topic => farmbot/sendnpk
+2022-09-18T11:39:52: 6ZJ77DGhHIuJhScSAACA
+2022-09-18T11:39:52: Mencoba menghubungkan ke Arduino.....
+2022-09-18T11:39:52: Mencoba kembali.....(1)
+2022-09-18T11:39:57: Mencoba kembali.....(2)
+2022-09-18T11:40:02: Mencoba kembali.....(3)
+2022-09-18T11:40:07: Mencoba kembali.....(4)
+2022-09-18T11:40:12: Mencoba kembali.....(5)
+2022-09-18T11:40:17: Mencoba kembali.....(6)
+2022-09-18T11:40:22: Mencoba kembali.....(7)
+2022-09-18T11:40:27: Mencoba kembali.....(8)
+2022-09-18T11:40:32: Mencoba kembali.....(9)
+2022-09-18T11:40:37: Mencoba kembali.....(10)
+2022-09-18T11:40:37: Error: Tidak dapat terhubung dengan Arduino Mego 2560
+2022-09-18T11:40:37:     at checkConnect (/home/pi/nodejs/FarmbotWebsocket/websocket.js:280:19)
+2022-09-18T11:40:37:     at Timeout._onTimeout (/home/pi/nodejs/FarmbotWebsocket/websocket.js:283:17)
+2022-09-18T11:40:37:     at listOnTimeout (internal/timers.js:554:17)
+2022-09-18T11:40:37:     at processTimers (internal/timers.js:497:7)
+2022-09-18T11:40:39: Server running on port 3100
+2022-09-18T11:40:40: MQTT Conected
+2022-09-18T11:40:40: subscribe ke topic => farmbot/sendnpk
+2022-09-18T11:40:40: Rt8mmZ4cSmPcKaaAAACC
+2022-09-18T11:40:40: Mencoba menghubungkan ke Arduino.....
+2022-09-18T11:40:40: Mencoba kembali.....(1)
+2022-09-18T11:40:45: Mencoba kembali.....(2)
+2022-09-18T11:40:50: Mencoba kembali.....(3)
+2022-09-18T11:40:55: Mencoba kembali.....(4)
+2022-09-18T11:41:00: Mencoba kembali.....(5)
+2022-09-18T11:41:05: Mencoba kembali.....(6)
+2022-09-18T11:41:10: Mencoba kembali.....(7)
+2022-09-18T11:41:15: Mencoba kembali.....(8)
+2022-09-18T11:41:20: Mencoba kembali.....(9)
+2022-09-18T11:41:25: Mencoba kembali.....(10)
+2022-09-18T11:41:25: Error: Tidak dapat terhubung dengan Arduino Mego 2560
+2022-09-18T11:41:25:     at checkConnect (/home/pi/nodejs/FarmbotWebsocket/websocket.js:280:19)
+2022-09-18T11:41:25:     at Timeout._onTimeout (/home/pi/nodejs/FarmbotWebsocket/websocket.js:283:17)
+2022-09-18T11:41:25:     at listOnTimeout (internal/timers.js:554:17)
+2022-09-18T11:41:25:     at processTimers (internal/timers.js:497:7)
+2022-09-18T11:41:27: Server running on port 3100
+2022-09-18T11:41:27: MQTT Conected
+2022-09-18T11:41:27: subscribe ke topic => farmbot/sendnpk
+2022-09-18T11:41:27: 0LwbbPY2XU4SCp48AACE
+2022-09-18T11:41:27: Mencoba menghubungkan ke Arduino.....
+2022-09-18T11:41:27: Mencoba kembali.....(1)
+2022-09-18T11:41:32: Mencoba kembali.....(2)
+2022-09-18T11:41:37: Mencoba kembali.....(3)
+2022-09-18T11:41:42: Mencoba kembali.....(4)
+2022-09-18T11:41:47: Mencoba kembali.....(5)
+2022-09-18T11:41:52: Mencoba kembali.....(6)
+2022-09-18T11:41:57: Mencoba kembali.....(7)
+2022-09-18T11:42:02: Mencoba kembali.....(8)
+2022-09-18T11:42:07: Mencoba kembali.....(9)
+2022-09-18T11:42:12: Mencoba kembali.....(10)
+2022-09-18T11:42:12: Error: Tidak dapat terhubung dengan Arduino Mego 2560
+2022-09-18T11:42:12:     at checkConnect (/home/pi/nodejs/FarmbotWebsocket/websocket.js:280:19)
+2022-09-18T11:42:12:     at Timeout._onTimeout (/home/pi/nodejs/FarmbotWebsocket/websocket.js:283:17)
+2022-09-18T11:42:12:     at listOnTimeout (internal/timers.js:554:17)
+2022-09-18T11:42:12:     at processTimers (internal/timers.js:497:7)
+2022-09-18T11:42:14: Server running on port 3100
+2022-09-18T11:42:15: MQTT Conected
+2022-09-18T11:42:15: subscribe ke topic => farmbot/sendnpk
+2022-09-18T11:42:15: dz3IatM4D-sN0jYaAACG
+2022-09-18T11:42:15: Mencoba menghubungkan ke Arduino.....
+2022-09-18T11:42:15: Mencoba kembali.....(1)
+2022-09-18T11:42:20: Mencoba kembali.....(2)
+2022-09-18T11:42:25: Mencoba kembali.....(3)
+2022-09-18T11:42:30: Mencoba kembali.....(4)
+2022-09-18T11:42:35: Mencoba kembali.....(5)
+2022-09-18T11:42:40: Mencoba kembali.....(6)
+2022-09-18T11:42:45: Mencoba kembali.....(7)
+2022-09-18T11:42:50: Mencoba kembali.....(8)
+2022-09-18T11:42:55: Mencoba kembali.....(9)
+2022-09-18T11:43:00: Mencoba kembali.....(10)
+2022-09-18T11:43:00: Error: Tidak dapat terhubung dengan Arduino Mego 2560
+2022-09-18T11:43:00:     at checkConnect (/home/pi/nodejs/FarmbotWebsocket/websocket.js:280:19)
+2022-09-18T11:43:00:     at Timeout._onTimeout (/home/pi/nodejs/FarmbotWebsocket/websocket.js:283:17)
+2022-09-18T11:43:00:     at listOnTimeout (internal/timers.js:554:17)
+2022-09-18T11:43:00:     at processTimers (internal/timers.js:497:7)
+2022-09-18T11:43:02: Server running on port 3100
+2022-09-18T11:43:02: MQTT Conected
+2022-09-18T11:43:02: subscribe ke topic => farmbot/sendnpk
+2022-09-18T11:43:02: Ozw__z2ivhH6QKKwAACI
+2022-09-18T11:43:02: Mencoba menghubungkan ke Arduino.....
+2022-09-18T11:43:02: Mencoba kembali.....(1)
+2022-09-18T11:43:07: Mencoba kembali.....(2)
+2022-09-18T11:43:12: Mencoba kembali.....(3)
+2022-09-18T11:43:17: Mencoba kembali.....(4)
+2022-09-18T11:43:22: Mencoba kembali.....(5)
+2022-09-18T11:43:27: Mencoba kembali.....(6)
+2022-09-18T11:43:32: Mencoba kembali.....(7)
+2022-09-18T11:43:37: Mencoba kembali.....(8)
+2022-09-18T11:43:42: Mencoba kembali.....(9)
+2022-09-18T11:43:47: Mencoba kembali.....(10)
+2022-09-18T11:43:47: Error: Tidak dapat terhubung dengan Arduino Mego 2560
+2022-09-18T11:43:47:     at checkConnect (/home/pi/nodejs/FarmbotWebsocket/websocket.js:280:19)
+2022-09-18T11:43:47:     at Timeout._onTimeout (/home/pi/nodejs/FarmbotWebsocket/websocket.js:283:17)
+2022-09-18T11:43:47:     at listOnTimeout (internal/timers.js:554:17)
+2022-09-18T11:43:47:     at processTimers (internal/timers.js:497:7)
+2022-09-18T11:43:49: Server running on port 3100
+2022-09-18T11:43:49: MQTT Conected
+2022-09-18T11:43:49: subscribe ke topic => farmbot/sendnpk
+2022-09-18T11:43:49: VZkFsxtZlm4hmMouAACK
+2022-09-18T11:43:49: Mencoba menghubungkan ke Arduino.....
+2022-09-18T11:43:49: Mencoba kembali.....(1)
+2022-09-18T11:43:54: Mencoba kembali.....(2)
+2022-09-18T11:43:59: Mencoba kembali.....(3)
+2022-09-18T11:44:04: Mencoba kembali.....(4)
+2022-09-18T11:44:09: Mencoba kembali.....(5)
+2022-09-18T11:44:14: Mencoba kembali.....(6)
+2022-09-18T11:44:19: Mencoba kembali.....(7)
+2022-09-18T11:44:24: Mencoba kembali.....(8)
+2022-09-18T11:44:29: Mencoba kembali.....(9)
+2022-09-18T11:44:34: Mencoba kembali.....(10)
+2022-09-18T11:44:34: Error: Tidak dapat terhubung dengan Arduino Mego 2560
+2022-09-18T11:44:34:     at checkConnect (/home/pi/nodejs/FarmbotWebsocket/websocket.js:280:19)
+2022-09-18T11:44:34:     at Timeout._onTimeout (/home/pi/nodejs/FarmbotWebsocket/websocket.js:283:17)
+2022-09-18T11:44:34:     at listOnTimeout (internal/timers.js:554:17)
+2022-09-18T11:44:34:     at processTimers (internal/timers.js:497:7)
+2022-09-18T11:44:36: Server running on port 3100
+2022-09-18T11:44:37: MQTT Conected
+2022-09-18T11:44:37: subscribe ke topic => farmbot/sendnpk
+2022-09-18T11:44:37: 58Y95I1WO7tleb0GAACM
+2022-09-18T11:44:37: Mencoba menghubungkan ke Arduino.....
+2022-09-18T11:44:37: Mencoba kembali.....(1)
+2022-09-18T11:44:42: Mencoba kembali.....(2)
+2022-09-18T11:44:47: Mencoba kembali.....(3)

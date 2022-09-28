@@ -104,14 +104,15 @@ function ambilGambarPython() {
             if (resp.includes("false")) {
                 console.log("Failed to 'AMBIL GAMBAR' ")
                 result['status'] = false
-                socket.emit("BodyImg", result);
+                // socket.emit("BodyImg", result);
             } else {
                 resp = resp.replace('\n', '');
                 result['nama'] = resp
                 result['status'] = true
+                console.log("Camera success");
                 result['file'] = base64_encode('./camera/' + resp);
                 // resp = JSON.parse(resp);
-                socket.emit("BodyImg", result);
+                // socket.emit("BodyImg", result);
             }
             resolve(result)
         });
