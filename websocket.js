@@ -91,82 +91,6 @@ function base64_encode(file) {
     return new Buffer(bitmap).toString('base64');
 }
 
-var fbFinished = true;
-
-async function fotoBadan() {
-    return new Promise((resolve, reject) => {
-        if (checkTime(8, 16) && fbFinished) {
-            fbFinished = false;
-            const spawn = require('child_process').spawn;
-            var scriptExecution = spawn('python3', ["./cambody.py", 'args']);
-            var file
-            scriptExecution.stdout.on('data', async (data) => {
-                // console.log(data)
-                var resp = new TextDecoder("utf-8").decode(data);
-                // console.log(resp[1])
-                var result = {}
-                if (resp == "false") {
-                    console.log("Failed to 'AMBIL GAMBAR' ")
-                    result['status'] = false
-                } else {
-                    resp = resp.replace('\n', '');
-                    result['nama'] = resp
-                    result['status'] = true
-                    result['file'] = base64_encode('./camera/' + resp);
-                    // resp = JSON.parse(resp);
-                    socket.emit("BodyImg", result);
-                    await delay(1800000);
-                    fbFinished = true;
-                }
-                resolve(result)
-            });
-
-            scriptExecution.stdout.on('end', (data) => {
-                var resp = new TextDecoder("utf-8").decode(data);
-                // console.log()
-                // console.log('end' + file);
-                // console.log(string);
-                // resolve(string);
-                // console.log(uint8arrayToString(data));
-                // res.json({result: 'done'});
-            });
-
-            // Handle error output
-            scriptExecution.stderr.on('data', async (data) => {
-                var string = new TextDecoder("utf-8").decode(data);
-                console.log('error', string);
-                // As said before, convert the Uint8Array to a readable string.
-                // console.log(data);
-                // res.json({result: data});
-                await delay(30000);
-                fbFinished = true;
-                reject({ message: string });
-            });
-
-            scriptExecution.on('exit', (code) => {
-                // console.log("Process quit with code : " + code);
-                // resolve(file)
-            });
-            scriptExecution.stdin.write('start');
-            scriptExecution.stdin.end();
-        } else {
-            resolve({ skip: true })
-        }
-    })
-}
-
-// setInterval(fotoBadan(), 10000);
-// Promise.resolve()
-//     .then(async (r) => {
-//         console.log(r)
-//         await fotoBadan()
-//     })
-//     .catch(async (r) => {
-//         console.error(r)
-//         await fotoBadan()
-//     })
-// fotoBadan()
-
 function ambilGambarPython() {
     return new Promise((resolve, reject) => {
         const spawn = require('child_process').spawn;
@@ -177,7 +101,7 @@ function ambilGambarPython() {
             var resp = new TextDecoder("utf-8").decode(data);
             // console.log(resp[1])
             var result = {}
-            if (resp == "false") {
+            if (resp.includes("false")) {
                 console.log("Failed to 'AMBIL GAMBAR' ")
                 result['status'] = false
             } else {
@@ -215,6 +139,7 @@ function ambilGambarPython() {
             // console.log("Process quit with code : " + code);
             // resolve(file)
         });
+        console.log("Start SEND");
         scriptExecution.stdin.write('start');
         scriptExecution.stdin.end();
     })
@@ -260,15 +185,6 @@ var sendded = false;
 var checkConnect = () => {
     tryN++;
     if (fserial) {
-        // Promise.resolve()
-        //     .then(async (r) => {
-        //         console.log(r)
-        //         await fotoBadan()
-        //     })
-        //     .catch(async (r) => {
-        //         console.error(r)
-        //         await fotoBadan()
-        //     })
         console.log("Get Task");
         socket.emit("TaskStart", { id: 0, status: true, id: socket.id })
         // if(!sendded){
@@ -289,6 +205,7 @@ var checkConnect = () => {
 socket.on("connect", () => {
     console.log(socket.id); // x8WIv7-mJelg7on_ALbx
     console.log("Mencoba menghubungkan ke Arduino.....")
+    // port.write("start")
     checkConnect()
     // setTimeout(() => [
     // ], 5000)
