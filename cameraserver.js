@@ -39,7 +39,7 @@ function countDelay(){
 
 function checkTime(min, max) {
     const d = new Date();
-    let hour = d.getHours();
+    let hour = d.getHours()+7;
     if (hour > min && hour < max) {
         return true
     }
@@ -59,7 +59,9 @@ var delayTimer = 1800000;
 
 async function fotoBadan() {
     return new Promise((resolve, reject) => {
+        // console.log("check foto")
         if (checkTime(8, 16) && fbFinished) {
+            skippedloop = false;
             console.log("foto")
             fbFinished = false;
             const spawn = require('child_process').spawn;
@@ -71,6 +73,7 @@ async function fotoBadan() {
                 // console.log(resp[1])
                 var result = {}
                 resp = resp.replace('\n', '');
+                result['skip'] = false
                 result['nama'] = resp
                 result['file'] = base64_encode('./camera/body_' + resp);
                 // resp = JSON.parse(resp);
@@ -119,10 +122,18 @@ async function fotoBadan() {
 }
 
 var rundude = true
-
+var skippedloop = false;
 var unlimitedPower = async () => {
     while (rundude) {
-        await fotoBadan()
+        var res = await fotoBadan();
+
+        if(res['skip'] && !skippedloop){
+            console.log("Menunggu waktu yang pas")
+            console.log("Conf : " + checkTime(8, 16) + " / " + fbFinished)
+            skippedloop = true
+        }else if(!res['skip']){
+            console.log(res)
+        }
     }
 }
 
@@ -134,6 +145,10 @@ var printstatus = async () => {
 socket.on("connect", async () => {
     rundude = true
     console.log(socket.id); // x8WIv7-mJelg7on_ALbx
+    console.log({
+        status : rundude,
+        fbFinished
+    })
     console.log("Socket Get")
     unlimitedPower()
 });
