@@ -25,10 +25,10 @@ def img_estim(img, thrshld):
     return 'light' if is_light else 'dark'
 
 
-os.system("v4l2-ctl --device /dev/video2 -c exposure_auto=1")
-os.system("v4l2-ctl --device /dev/video2 -c exposure_absolute=28")
+os.system("v4l2-ctl --device /dev/video0 -c exposure_auto=1")
+os.system("v4l2-ctl --device /dev/video0 -c exposure_absolute=28")
 
-cam = cv2.VideoCapture(2)
+cam = cv2.VideoCapture(0)
 # cam.set(cv2.CAP_PROP_AUTO_EXPOSURE, )
 
 
