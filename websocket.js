@@ -321,6 +321,7 @@ parser.on('data', (res) => {
                     tfile = file;
                 }).catch(err => console.error(err))
             } else if (data.status == "2") {
+                console.log("Emit TaskDone")
                 socket.emit("TaskDone", { task: currentTask, task_id: currentTask["task_id"], status: true, id: socket.id, foto: tfile })
 
             }
