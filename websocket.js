@@ -315,6 +315,7 @@ parser.on('data', (res) => {
 
                 ambilGambarPython().then(async (file) => {
                     let t = "r\n" + reset + "\n"
+                    print("Capture done , now send => " + t)
                     port.write(t);
                     tfile = file;
                 }).catch(err => console.error(err))
