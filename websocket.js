@@ -114,6 +114,7 @@ function ambilGambarPython() {
                 // resp = JSON.parse(resp);
                 // socket.emit("BodyImg", result);
             }
+            console.log("Resolving")
             resolve(result)
         });
 
