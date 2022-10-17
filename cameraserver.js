@@ -167,7 +167,7 @@ socket.on("connect", async () => {
         fbFinished
     })
     console.log("Socket Get")
-    var j = schedule.scheduleJob('*/15 * * * * *', async function () {  // this for one hour
+    var j = schedule.scheduleJob('*/60 * * * *', async function () {  // this for one hour
         var res = await fotoBadan();
         if (res['skip'] && !skippedloop) {
             console.log(res['skipmsg'])
