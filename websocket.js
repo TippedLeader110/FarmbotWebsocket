@@ -316,10 +316,18 @@ parser.on('data', (res) => {
 
                 ambilGambarPython().then(async (file) => {
                     let t = "r\n" + reset + "\n"
+                    console.log("status => " + t.status)
                     print("Capture done , now send => " + t)
                     port.write(t);
                     tfile = file;
-                }).catch(err => console.error(err))
+                }).catch(err => {
+                    let t = "r\n" + reset + "\n"
+                    // console.log("status => " + t.status)
+                    // print("Capture done , now send => " + t)
+
+                    port.write(t);
+                    tfile = file['status'] = false;
+                })
             } else if (data.status == "2") {
                 console.log("Emit TaskDone")
                 socket.emit("TaskDone", { task: currentTask, task_id: currentTask["task_id"], status: true, id: socket.id, foto: tfile })
