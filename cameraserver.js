@@ -40,7 +40,7 @@ function countDelay() {
 
 function checkTime(min, max) {
     const d = new Date();
-    let hour = d.getHours();
+    let hour = d.getHours() + 7;
     console.log(hour + " > " + min + " && " + hour + " < " + max)
     if (hour > min && hour < max) {
         return true

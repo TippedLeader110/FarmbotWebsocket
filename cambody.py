@@ -7,6 +7,8 @@ import os
 import imageio.v2 as imageio
 import numpy as np
 
+idxc = 0
+
 def set_manual_exposure(dev_video_id, exposure_time):
     commands = [
         ("v4l2-ctl --device /dev/video"+str(id)+" -c exposure_auto=3"),
@@ -25,10 +27,10 @@ def img_estim(img, thrshld):
     return 'light' if is_light else 'dark'
 
 
-os.system("v4l2-ctl --device /dev/video0 -c exposure_auto=1")
-os.system("v4l2-ctl --device /dev/video0 -c exposure_absolute=28")
+cam = cv2.VideoCapture(idxc)
+os.system("v4l2-ctl --device /dev/video"+str(idxc)+" -c exposure_auto=1")
+os.system("v4l2-ctl --device /dev/video"+str(idxc)+" -c exposure_absolute=28")
 
-cam = cv2.VideoCapture(0)
 # cam.set(cv2.CAP_PROP_AUTO_EXPOSURE, )
 
 
@@ -44,9 +46,9 @@ if cam.isOpened():
     f = imageio.imread('./camera/body_' + img_name, as_gray=True)
     # print(img_estim(f, 80))
     if(img_estim(f, 80)=='dark'):
-        os.system("v4l2-ctl --device /dev/video0 -c exposure_absolute=40")
+        os.system("v4l2-ctl --device /dev/video"+str(idxc)+" -c exposure_absolute=40")
         cam.release()
-        cam = cv2.VideoCapture(2)
+        cam = cv2.VideoCapture(idxc)
         ret, frame = cam.read()
         cv2.imwrite('./camera/body_' + img_name, frame)
 

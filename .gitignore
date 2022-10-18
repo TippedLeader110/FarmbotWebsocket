@@ -1,1 +1,4 @@
 node_modules/*
+camera/*.png
+camera/*.jpg
+camera/*.jpeg
