@@ -41,8 +41,8 @@ function countDelay() {
 function checkTime(min, max) {
     const d = new Date();
     let hour = d.getHours() + 7;
-    console.log(hour + " > " + min + " && " + hour + " < " + max)
-    if (hour > min && hour < max) {
+    console.log(hour + " > " + min + " && " + hour + " <= " + max)
+    if (hour > min && hour <= max) {
         return true
     }
     return false;
@@ -87,6 +87,7 @@ async function fotoBadan() {
                     result['skip'] = false
                     result['skipmsg'] = "false"
                     result['nama'] = resp
+                    result['status'] = true
                     result['file'] = base64_encode('./camera/body_' + resp);
                     // resp = JSON.parse(resp);
                     console.log("Sending pict")
@@ -167,14 +168,14 @@ socket.on("connect", async () => {
         fbFinished
     })
     console.log("Socket Get")
-    var j = schedule.scheduleJob('*/60 * * * *', async function () {  // this for one hour
+    var j = schedule.scheduleJob('*/30 * * * * ', async function () {  // this for one hour
         var res = await fotoBadan();
         if (res['skip'] && !skippedloop) {
             console.log(res['skipmsg'])
             console.log("Conf : " + checkTime(8, 16) + " / " + fbFinished)
             skippedloop = true
         } else if (!res['skip']) {
-            console.log(res)
+            console.log(res['nama'])
         }
     });
 });
