@@ -41,7 +41,8 @@ function countDelay() {
 function checkTime(min, max) {
     const d = new Date();
     let hour = d.getHours() + 7;
-    if (hour > min && hour < max) {
+    console.log(hour + " > " + min + " && " + hour + " <= " + max)
+    if (hour > min && hour <= max) {
         return true
     }
     return false;
@@ -74,16 +75,28 @@ async function fotoBadan() {
                 // console.log(resp[1])
                 var result = {}
                 resp = resp.replace('\n', '');
-                result['skip'] = false
-                result['nama'] = resp
-                result['file'] = base64_encode('./camera/body_' + resp);
-                // resp = JSON.parse(resp);
-                console.log("Sending pict")
-                socket.emit("BodyImg", result);
-                console.log("Delay 1800000ms")
-                console.log(result["nama"])
-                await delay(delayTimer);
-                console.log("Delay Done")
+                console.log('============================')
+                console.log("resp=='" + resp + "'")
+                console.log('============================')
+                if (resp == "false") {
+                    console.log("FF")
+                    result['skip'] = true
+                    result['skipmsg'] = "Camera not Ketemu"
+                } else {
+                    console.log("TT")
+                    result['skip'] = false
+                    result['skipmsg'] = "false"
+                    result['nama'] = resp
+                    result['status'] = true
+                    result['file'] = base64_encode('./camera/body_' + resp);
+                    // resp = JSON.parse(resp);
+                    console.log("Sending pict")
+                    socket.emit("BodyImg", result);
+                    console.log("Delay 1800000ms")
+                    console.log(result["nama"])
+                    // await delay(delayTimer);
+                    console.log("Delay Done")
+                }
                 fbFinished = true;
                 resolve(result)
             });
@@ -101,13 +114,13 @@ async function fotoBadan() {
             // Handle error output
             scriptExecution.stderr.on('data', async (data) => {
                 var string = new TextDecoder("utf-8").decode(data);
-                console.log('error', string);
+                console.log('Error Python => ', string);
                 // As said before, convert the Uint8Array to a readable string.
                 // console.log(data);
                 // res.json({result: data});
-                await delay(30000);
-                fbFinished = true;
-                reject({ message: string });
+                // await delay(30000);
+                // fbFinished = true;
+                // reject({ message: string });
             });
 
             scriptExecution.on('exit', (code) => {
@@ -155,14 +168,14 @@ socket.on("connect", async () => {
         fbFinished
     })
     console.log("Socket Get")
-    var j = schedule.scheduleJob('*/15 * * * *', async function () {  // this for one hour
+    var j = schedule.scheduleJob('*/30 * * * * ', async function () {  // this for one hour
         var res = await fotoBadan();
         if (res['skip'] && !skippedloop) {
-            console.log("Menunggu waktu yang pas")
+            console.log(res['skipmsg'])
             console.log("Conf : " + checkTime(8, 16) + " / " + fbFinished)
             skippedloop = true
         } else if (!res['skip']) {
-            console.log(res)
+            console.log(res['nama'])
         }
     });
 });

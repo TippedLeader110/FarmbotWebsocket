@@ -133,11 +133,11 @@ function ambilGambarPython() {
         // Handle error output
         scriptExecution.stderr.on('data', (data) => {
             var string = new TextDecoder("utf-8").decode(data);
-            console.log('error', string);
+            console.log('Python Error => ', string);
             // As said before, convert the Uint8Array to a readable string.
             // console.log(data);
             // res.json({result: data});
-            reject({ message: string });
+            // reject({ message: string });
         });
 
         scriptExecution.on('exit', (code) => {
@@ -318,7 +318,7 @@ parser.on('data', (res) => {
 
                 ambilGambarPython().then(async (file) => {
                     let t = "r\n" + reset + "\n"
-                    print("Capture done , now send => " + t)
+                    console.log("Capture done , now send => " + t)
                     port.write(t);
                     tfile = file;
                 }).catch(err => console.error(err))
