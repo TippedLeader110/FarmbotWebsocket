@@ -12,7 +12,8 @@ const mqtt = require('mqtt')
 
 const SerialPort = require('serialport');
 const Readline = SerialPort.parsers.Readline;
-const port = new SerialPort('/dev/ttyACM0', 9600);
+const port = new SerialPort('/dev/ttyUSB0', 9600);
+// const port = new SerialPort('/dev/ttyACM0', 9600);
 // const port = new SerialPort('COM3', 9600);
 const parser = port.pipe(new Readline({ delimiter: '\r\n' }));
 
@@ -115,6 +116,7 @@ function ambilGambarPython() {
                 // socket.emit("BodyImg", result);
             }
             console.log("Resolving")
+            console.log(result)
             resolve(result)
         });
 
